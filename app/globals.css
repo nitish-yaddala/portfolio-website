@@ -301,6 +301,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -314,6 +315,16 @@ h1, h2, h3, h4, h5, h6 {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(74, 222, 128, 0.35);
+}
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
 }
 
 /* Selection */

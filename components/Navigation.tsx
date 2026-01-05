@@ -79,11 +79,11 @@ export default function Navigation() {
         transform: 'translateZ(0)' // GPU acceleration
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-18">
+      <div className="w-full mx-auto px-3 sm:px-4 lg:px-6">
+        <div className="flex items-center justify-between h-18 gap-2">
           <button
             onClick={() => scrollToSection('home')}
-            className="flex items-center gap-2.5 font-mono text-xl font-bold text-hacker-green transition-all hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg rounded px-2 whitespace-nowrap"
+            className="flex items-center gap-2 font-mono text-lg sm:text-xl font-bold text-hacker-green transition-all hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg rounded px-2 whitespace-nowrap flex-shrink-0"
             aria-label="Go to home"
           >
             {/* Avatar */}
@@ -110,52 +110,94 @@ export default function Navigation() {
             <span className="whitespace-nowrap">{'>'} nitish_yaddala</span>
           </button>
 
-          <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`font-mono text-xs xl:text-sm transition-all relative py-2 focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg rounded px-1.5 xl:px-2 whitespace-nowrap ${
-                  activeSection === item.id
-                    ? 'text-hacker-green'
-                    : 'text-gray-400 hover:text-hacker-green'
-                }`}
-                aria-label={`Navigate to ${item.label} section`}
-                aria-current={activeSection === item.id ? 'page' : undefined}
-              >
-                {item.label}
-                {activeSection === item.id && (
-                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-hacker-green/70 to-transparent"></span>
+          {/* Desktop navigation: Show items with overflow handling */}
+          <div className="hidden lg:flex items-center flex-1 min-w-0 ml-4">
+            <div className="flex items-center space-x-3 xl:space-x-4 overflow-x-auto scrollbar-hide flex-1">
+              {navItems.slice(0, 7).map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`font-mono text-xs transition-all relative py-2 focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg rounded px-1.5 whitespace-nowrap flex-shrink-0 ${
+                    activeSection === item.id
+                      ? 'text-hacker-green'
+                      : 'text-gray-400 hover:text-hacker-green'
+                  }`}
+                  aria-label={`Navigate to ${item.label} section`}
+                  aria-current={activeSection === item.id ? 'page' : undefined}
+                >
+                  {item.label}
+                  {activeSection === item.id && (
+                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-hacker-green/70 to-transparent"></span>
+                  )}
+                </button>
+              ))}
+            </div>
+            {/* More dropdown for remaining items */}
+            {navItems.length > 7 && (
+              <div className="relative ml-2 flex-shrink-0">
+                <button
+                  onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
+                  onBlur={() => setTimeout(() => setIsMoreMenuOpen(false), 200)}
+                  className="font-mono text-xs text-gray-400 hover:text-hacker-green transition-all py-2 px-1.5 rounded focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg whitespace-nowrap"
+                  aria-label="Show more navigation items"
+                  aria-expanded={isMoreMenuOpen}
+                >
+                  More...
+                </button>
+                {isMoreMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-terminal-bg/95 backdrop-blur-xl border border-hacker-green/30 rounded-lg shadow-lg z-50">
+                    <div className="py-2">
+                      {navItems.slice(7).map((item) => (
+                        <button
+                          key={item.id}
+                          onClick={() => {
+                            scrollToSection(item.id)
+                            setIsMoreMenuOpen(false)
+                          }}
+                          className={`block w-full text-left px-4 py-2 font-mono text-xs transition-all focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-inset ${
+                            activeSection === item.id
+                              ? 'text-hacker-green bg-hacker-green/10 border-l-2 border-hacker-green'
+                              : 'text-gray-400 hover:text-hacker-green hover:bg-hacker-green/5'
+                          }`}
+                          aria-label={`Navigate to ${item.label} section`}
+                        >
+                          {item.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 )}
-              </button>
-            ))}
+              </div>
+            )}
           </div>
           
           {/* Medium screen: Show fewer items with dropdown */}
-          <div className="hidden md:flex lg:hidden items-center space-x-4 relative">
-            {navItems.slice(0, 5).map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`font-mono text-xs transition-all relative py-2 focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg rounded px-1.5 whitespace-nowrap ${
-                  activeSection === item.id
-                    ? 'text-hacker-green'
-                    : 'text-gray-400 hover:text-hacker-green'
-                }`}
-                aria-label={`Navigate to ${item.label} section`}
-                aria-current={activeSection === item.id ? 'page' : undefined}
-              >
-                {item.label}
-                {activeSection === item.id && (
-                  <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-hacker-green/70 to-transparent"></span>
-                )}
-              </button>
-            ))}
-            <div className="relative">
+          <div className="hidden md:flex lg:hidden items-center space-x-3 flex-1 min-w-0 ml-4">
+            <div className="flex items-center space-x-2 overflow-x-auto scrollbar-hide">
+              {navItems.slice(0, 4).map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`font-mono text-xs transition-all relative py-2 focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg rounded px-1.5 whitespace-nowrap flex-shrink-0 ${
+                    activeSection === item.id
+                      ? 'text-hacker-green'
+                      : 'text-gray-400 hover:text-hacker-green'
+                  }`}
+                  aria-label={`Navigate to ${item.label} section`}
+                  aria-current={activeSection === item.id ? 'page' : undefined}
+                >
+                  {item.label}
+                  {activeSection === item.id && (
+                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-hacker-green/70 to-transparent"></span>
+                  )}
+                </button>
+              ))}
+            </div>
+            <div className="relative flex-shrink-0 ml-2">
               <button
                 onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
                 onBlur={() => setTimeout(() => setIsMoreMenuOpen(false), 200)}
-                className="font-mono text-xs text-gray-400 hover:text-hacker-green transition-all py-2 px-1.5 rounded focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg"
+                className="font-mono text-xs text-gray-400 hover:text-hacker-green transition-all py-2 px-1.5 rounded focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg whitespace-nowrap"
                 aria-label="Show more navigation items"
                 aria-expanded={isMoreMenuOpen}
               >
@@ -164,7 +206,7 @@ export default function Navigation() {
               {isMoreMenuOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-terminal-bg/95 backdrop-blur-xl border border-hacker-green/30 rounded-lg shadow-lg z-50">
                   <div className="py-2">
-                    {navItems.slice(5).map((item) => (
+                    {navItems.slice(4).map((item) => (
                       <button
                         key={item.id}
                         onClick={() => {
@@ -187,7 +229,7 @@ export default function Navigation() {
             </div>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 flex-shrink-0">
             <div className="hidden md:block">
               <ThemeToggle />
             </div>
