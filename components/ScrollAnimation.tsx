@@ -14,6 +14,7 @@ export default function ScrollAnimation({ children, delay = 0, className = '' }:
   const [hasAnimated, setHasAnimated] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
   const rafRef = useRef<number>()
+  const observerRef = useRef<IntersectionObserver | null>(null)
 
   useEffect(() => {
     // Check for reduced motion preference
@@ -27,6 +28,9 @@ export default function ScrollAnimation({ children, delay = 0, className = '' }:
     // Skip animation if already visible
     if (hasAnimated) return
 
+    const element = ref.current
+    if (!element) return
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -39,9 +43,8 @@ export default function ScrollAnimation({ children, delay = 0, className = '' }:
               }, delay)
             })
             // Unobserve after animation to improve performance
-            const currentRef = ref.current
-            if (currentRef) {
-              observer.unobserve(currentRef)
+            if (observerRef.current && element) {
+              observerRef.current.unobserve(element)
             }
           }
         })
@@ -52,18 +55,18 @@ export default function ScrollAnimation({ children, delay = 0, className = '' }:
       }
     )
 
-    const currentRef = ref.current
-    if (currentRef) {
-      observer.observe(currentRef)
-    }
+    observerRef.current = observer
+    observer.observe(element)
 
     return () => {
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current)
       }
-      if (currentRef) {
-        observer.unobserve(currentRef)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      if (observerRef.current && element) {
+        observerRef.current.unobserve(element)
       }
+      observerRef.current = null
     }
   }, [delay, hasAnimated])
 
