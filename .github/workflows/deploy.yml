@@ -35,6 +35,7 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
+          NEXT_PUBLIC_SITE_URL: https://nitish-yaddala.github.io/portfolio-website
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
