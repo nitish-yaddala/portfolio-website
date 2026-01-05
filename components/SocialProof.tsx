@@ -144,7 +144,7 @@ export default function SocialProof() {
               <h3 className="text-xl font-bold text-white font-mono mb-4">Testimonials</h3>
               <div className="flex-1 flex flex-col justify-center">
                 <p className="text-gray-400 text-sm font-mono italic mb-4">
-                  "Exceptional security engineer with deep expertise in penetration testing and vulnerability assessment."
+                  &ldquo;Exceptional security engineer with deep expertise in penetration testing and vulnerability assessment.&rdquo;
                 </p>
                 <p className="text-xs text-gray-500 font-mono">
                   — Available upon request

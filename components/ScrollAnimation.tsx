@@ -52,15 +52,15 @@ export default function ScrollAnimation({ children, delay = 0, className = '' }:
       }
     )
 
-    if (ref.current) {
-      observer.observe(ref.current)
+    const currentRef = ref.current
+    if (currentRef) {
+      observer.observe(currentRef)
     }
 
     return () => {
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current)
       }
-      const currentRef = ref.current
       if (currentRef) {
         observer.unobserve(currentRef)
       }
