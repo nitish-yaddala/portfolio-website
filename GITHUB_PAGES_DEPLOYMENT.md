@@ -24,15 +24,18 @@ Your code is already configured for GitHub Pages deployment! The GitHub Actions 
    - It's under the "Code and automation" section
 
 3. **Configure Source**
-   - Under **"Source"**, select:
-     - **"GitHub Actions"** (this is the modern way - uses your workflow)
-   - **OR** if "GitHub Actions" option is not available:
+   - **First, try to select "GitHub Actions"** (this is the modern way - uses your workflow)
+   - If "GitHub Actions" option is available:
+     - Select it and click **"Save"**
+     - The workflow will handle everything automatically!
+   
+   - **If "GitHub Actions" option is NOT available** (older GitHub interface):
      - Select **"Deploy from a branch"**
      - Branch: **`main`** (your existing branch)
-     - Folder: **`/out`** (the build output folder)
-   - Click **"Save"**
+     - Folder: **`/ (root)`** ← Select this (the workflow creates the output automatically)
+     - Click **"Save"**
    
-   **Note**: With GitHub Actions workflow, the deployment is automatic. You may just need to enable Pages, and the workflow will handle the rest!
+   **Important**: The `/out` folder doesn't exist in your repository - it's created during the build process by GitHub Actions. That's why you don't see it in the folder list. Just select "/ (root)" and the workflow will handle the deployment.
 
 ---
 
