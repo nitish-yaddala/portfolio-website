@@ -25,11 +25,14 @@ Your code is already configured for GitHub Pages deployment! The GitHub Actions 
 
 3. **Configure Source**
    - Under **"Source"**, select:
-     - **"Deploy from a branch"** (if not already selected)
-   - Under **"Branch"**:
-     - Branch: **`gh-pages`** (or select the branch that GitHub Actions creates)
-     - Folder: **`/ (root)`**
+     - **"GitHub Actions"** (this is the modern way - uses your workflow)
+   - **OR** if "GitHub Actions" option is not available:
+     - Select **"Deploy from a branch"**
+     - Branch: **`main`** (your existing branch)
+     - Folder: **`/out`** (the build output folder)
    - Click **"Save"**
+   
+   **Note**: With GitHub Actions workflow, the deployment is automatic. You may just need to enable Pages, and the workflow will handle the rest!
 
 ---
 
