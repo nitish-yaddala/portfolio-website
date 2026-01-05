@@ -48,7 +48,27 @@ html.light .text-gray-400 {
 }
 
 html.light .text-white {
-  color: #1f2937; /* Dark text instead of white in light mode */
+  color: #1f2937 !important; /* Dark text instead of white in light mode */
+}
+
+/* Ensure section headings are visible in light mode */
+html.light .section-heading,
+html.light .section-heading .text-white {
+  color: #1f2937 !important;
+}
+
+html.light h1, html.light h2, html.light h3, html.light h4, html.light h5, html.light h6 {
+  color: #1f2937;
+}
+
+html.light .terminal-window .text-white,
+html.light .terminal-window h1,
+html.light .terminal-window h2,
+html.light .terminal-window h3,
+html.light .terminal-window h4,
+html.light .terminal-window h5,
+html.light .terminal-window h6 {
+  color: #1f2937;
 }
 
 html.light .bg-terminal-bg {
