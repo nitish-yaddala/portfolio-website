@@ -1,11 +1,116 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { Ratelimit } from '@upstash/ratelimit'
+import { Redis } from '@upstash/redis'
 
 // Initialize Resend with API key from environment variable
 const resend = new Resend(process.env.RESEND_API_KEY)
 
+// Initialize Redis for rate limiting (using Upstash)
+// If UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN are not set,
+// rate limiting will fall back to a simple in-memory solution
+const redis = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
+  ? new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN,
+    })
+  : null
+
+// Rate limiter: Allow 3 requests per 15 minutes per IP
+const ratelimit = redis
+  ? new Ratelimit({
+      redis: redis,
+      limiter: Ratelimit.slidingWindow(3, '15 m'),
+      analytics: true,
+    })
+  : null
+
+// Simple in-memory fallback for rate limiting (when Upstash is not configured)
+const memoryStore = new Map<string, { count: number; resetTime: number }>()
+
+function getSimpleRateLimit(identifier: string): { allowed: boolean; remaining: number } {
+  const now = Date.now()
+  const windowMs = 15 * 60 * 1000 // 15 minutes
+  const maxRequests = 3
+
+  const record = memoryStore.get(identifier)
+  
+  if (!record || now > record.resetTime) {
+    // New window
+    memoryStore.set(identifier, { count: 1, resetTime: now + windowMs })
+    // Clean up old entries periodically
+    if (memoryStore.size > 1000) {
+      for (const [key, value] of memoryStore.entries()) {
+        if (now > value.resetTime) {
+          memoryStore.delete(key)
+        }
+      }
+    }
+    return { allowed: true, remaining: maxRequests - 1 }
+  }
+
+  if (record.count >= maxRequests) {
+    return { allowed: false, remaining: 0 }
+  }
+
+  record.count++
+  return { allowed: true, remaining: maxRequests - record.count }
+}
+
+function getClientIP(request: NextRequest): string {
+  // Try to get real IP from various headers (Vercel, Cloudflare, etc.)
+  const forwardedFor = request.headers.get('x-forwarded-for')
+  if (forwardedFor) {
+    return forwardedFor.split(',')[0].trim()
+  }
+  
+  const realIP = request.headers.get('x-real-ip')
+  if (realIP) {
+    return realIP
+  }
+  
+  // Fallback
+  return request.ip || 'unknown'
+}
+
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting
+    const identifier = getClientIP(request)
+    
+    if (ratelimit) {
+      // Use Upstash rate limiting
+      const { success, remaining, reset } = await ratelimit.limit(identifier)
+      
+      if (!success) {
+        const retryAfter = Math.ceil((reset - Date.now()) / 1000)
+        return NextResponse.json(
+          { 
+            error: 'Too many requests. Please try again later.',
+            retryAfter 
+          },
+          { 
+            status: 429,
+            headers: {
+              'Retry-After': retryAfter.toString(),
+              'X-RateLimit-Limit': '3',
+              'X-RateLimit-Remaining': remaining.toString(),
+              'X-RateLimit-Reset': new Date(reset).toISOString(),
+            }
+          }
+        )
+      }
+    } else {
+      // Use simple in-memory rate limiting
+      const { allowed, remaining } = getSimpleRateLimit(identifier)
+      if (!allowed) {
+        return NextResponse.json(
+          { error: 'Too many requests. Please try again later.' },
+          { status: 429 }
+        )
+      }
+    }
+
     const body = await request.json()
     const { name, email, subject, message } = body
 

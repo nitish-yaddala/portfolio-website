@@ -62,6 +62,10 @@ export default function Contact() {
       const data = await response.json()
 
       if (!response.ok) {
+        if (response.status === 429) {
+          const retryAfter = response.headers.get('Retry-After')
+          throw new Error(data.error || `Too many requests. Please try again in ${retryAfter ? `${retryAfter} seconds` : 'a few minutes'}.`)
+        }
         throw new Error(data.error || 'Failed to send message')
       }
 
