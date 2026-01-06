@@ -176,7 +176,7 @@ NEXT_PUBLIC_PLAUSIBLE_DOMAIN=yourdomain.com  # Optional: Plausible Analytics
 
 ## Notes
 
-- The contact form is client-side only (no backend). For actual contact, use the email link.
+- Contact form uses Resend API for email delivery. See [EMAIL_SETUP.md](./EMAIL_SETUP.md) for configuration.
 - Resume PDF is located at `public/resume.pdf`
 - All content is managed in `data/resume.ts`
 
