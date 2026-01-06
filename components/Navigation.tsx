@@ -112,7 +112,7 @@ export default function Navigation() {
 
           {/* Desktop navigation: Show items with overflow handling */}
           <div className="hidden lg:flex items-center flex-1 min-w-0 ml-4 max-w-none">
-            <div className="flex items-center space-x-3 xl:space-x-4 2xl:space-x-5 flex-1 overflow-hidden">
+            <div className="flex items-center gap-2 xl:gap-3 2xl:gap-4 flex-1 overflow-hidden justify-start">
               {navItems.slice(0, 7).map((item) => (
                 <button
                   key={item.id}
