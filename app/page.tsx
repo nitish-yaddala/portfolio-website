@@ -17,7 +17,7 @@ import SectionJumpMenu from '@/components/SectionJumpMenu'
 import SecurityResources from '@/components/SecurityResources'
 import PerformanceMetrics from '@/components/PerformanceMetrics'
 import RecentActivity from '@/components/RecentActivity'
-import SocialProof from '@/components/SocialProof'
+import SocialProof from '@/components/SocialProofWithSkeleton'
 import SecurityAdvisories from '@/components/SecurityAdvisories'
 import ScrollProgress from '@/components/ScrollProgress'
 

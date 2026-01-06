@@ -8,6 +8,7 @@ import KeyboardShortcuts from '@/components/KeyboardShortcuts'
 import Analytics from '@/components/Analytics'
 import { ToastProvider } from '@/components/Toast'
 import PageLoadingBar from '@/components/PageLoadingBar'
+import ViewTransitions from '@/components/ViewTransitions'
 import ErrorBoundaryWrapper from '@/components/ErrorBoundaryWrapper'
 import CursorTrail from '@/components/CursorTrail'
 import ParallaxBackground from '@/components/ParallaxBackground'
@@ -59,6 +60,16 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  manifest: '/manifest.json',
+  icons: {
+    icon: '/icon-192.png',
+    apple: '/icon-192.png',
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Nitish Portfolio',
+  },
 }
 
 export default function RootLayout({
@@ -67,7 +78,25 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning style={{ viewTransitionName: 'root' }}>
+      <head>
+        <meta name="theme-color" content="#0a0e27" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Nitish Portfolio" />
+        <link rel="manifest" href="/manifest.json" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator && typeof window !== 'undefined') {
+                window.addEventListener('load', () => {
+                  navigator.serviceWorker.register('/service-worker.js').catch(() => {});
+                });
+              }
+            `,
+          }}
+        />
+      </head>
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
         <PageLoadingBar />
         <ToastProvider>
@@ -75,6 +104,7 @@ export default function RootLayout({
           <StructuredData />
           <KeyboardShortcuts />
           <Analytics />
+          <ViewTransitions />
           <CursorTrail />
           <a href="#main-content" className="skip-link">
             Skip to main content

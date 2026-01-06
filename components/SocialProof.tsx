@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { Github, Star, GitBranch, GitCommit } from 'lucide-react'
 import { resumeData } from '@/data/resume'
 import ScrollAnimation from './ScrollAnimation'
+import SkeletonLoader from './SkeletonLoader'
 
 interface GitHubStats {
   repositories: number
@@ -109,8 +110,10 @@ export default function SocialProof() {
                 <span className="text-sm text-gray-400 font-mono uppercase tracking-wider">GitHub Stats</span>
               </div>
               {githubStats.loading ? (
-                <div className="flex-1 flex items-center justify-center">
-                  <div className="text-gray-500 font-mono text-sm">Loading...</div>
+                <div className="flex-1 space-y-3">
+                  <SkeletonLoader variant="line" width="100%" height="20px" />
+                  <SkeletonLoader variant="line" width="100%" height="20px" />
+                  <SkeletonLoader variant="line" width="100%" height="20px" />
                 </div>
               ) : githubStats.error ? (
                 <div className="flex-1 flex items-center justify-center">

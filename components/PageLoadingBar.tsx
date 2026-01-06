@@ -1,45 +1,45 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation'
 
 export default function PageLoadingBar() {
   const [loading, setLoading] = useState(false)
   const [progress, setProgress] = useState(0)
-  const pathname = usePathname()
 
   useEffect(() => {
-    // Reset loading state on pathname change
-    setLoading(true)
-    setProgress(0)
+    // Only show loading bar on initial page load
+    if (typeof window !== 'undefined' && !loading) {
+      setLoading(true)
+      setProgress(0)
 
-    // Simulate loading progress
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 90) {
-          clearInterval(interval)
-          return 90
-        }
-        // Increment progress with easing
-        const increment = Math.random() * 15 + 5
-        return Math.min(prev + increment, 90)
-      })
-    }, 100)
+      // Simulate loading progress
+      const interval = setInterval(() => {
+        setProgress((prev) => {
+          if (prev >= 90) {
+            clearInterval(interval)
+            return 90
+          }
+          // Increment progress with easing
+          const increment = Math.random() * 15 + 5
+          return Math.min(prev + increment, 90)
+        })
+      }, 100)
 
-    // Complete the loading after a short delay
-    const timeout = setTimeout(() => {
-      setProgress(100)
-      setTimeout(() => {
-        setLoading(false)
-        setProgress(0)
-      }, 300)
-    }, 500)
+      // Complete the loading after a short delay
+      const timeout = setTimeout(() => {
+        setProgress(100)
+        setTimeout(() => {
+          setLoading(false)
+          setProgress(0)
+        }, 300)
+      }, 500)
 
-    return () => {
-      clearInterval(interval)
-      clearTimeout(timeout)
+      return () => {
+        clearInterval(interval)
+        clearTimeout(timeout)
+      }
     }
-  }, [pathname])
+  }, [])
 
   if (!loading) return null
 
