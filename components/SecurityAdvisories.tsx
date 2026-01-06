@@ -29,22 +29,22 @@ export default function SecurityAdvisories() {
         <div className="space-y-8">
           {advisories.map((advisory, idx) => (
             <ScrollAnimation key={idx} delay={idx * 150}>
-              <div className="terminal-window rounded-lg p-8 card-hover group">
-                <div className="flex items-start gap-4 mb-6">
-                  <div className="p-3 bg-hacker-pink/10 rounded-lg group-hover:bg-hacker-pink/20 transition-colors flex-shrink-0">
+              <div className="terminal-window rounded-lg p-4 sm:p-6 md:p-8 card-hover group overflow-hidden">
+                <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-4 mb-4 sm:mb-6">
+                  <div className="p-3 bg-hacker-pink/10 rounded-lg group-hover:bg-hacker-pink/20 transition-colors flex-shrink-0 self-start">
                     <Shield className="text-hacker-pink" size={24} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-4 mb-2">
-                      <h3 className="text-xl font-bold text-white font-mono group-hover:text-hacker-green transition-colors">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4 mb-3 sm:mb-2">
+                      <h3 className="text-lg sm:text-xl font-bold text-white font-mono group-hover:text-hacker-green transition-colors break-words flex-1 min-w-0">
                         {advisory.title}
                       </h3>
-                      <span className="px-3 py-1 bg-hacker-pink/10 border border-hacker-pink/30 text-hacker-pink text-xs font-mono rounded whitespace-nowrap flex-shrink-0 flex items-center gap-1.5">
-                        <AlertTriangle size={12} />
-                        Responsible Disclosure
+                      <span className="px-2.5 sm:px-3 py-1 bg-hacker-pink/10 border border-hacker-pink/30 text-hacker-pink text-xs font-mono rounded flex-shrink-0 flex items-center gap-1.5 self-start">
+                        <AlertTriangle size={12} className="flex-shrink-0" />
+                        <span className="whitespace-nowrap">Responsible Disclosure</span>
                       </span>
                     </div>
-                    <p className="text-gray-300 leading-relaxed mb-4">
+                    <p className="text-gray-300 leading-relaxed mb-4 text-sm sm:text-base break-words">
                       {advisory.description}
                     </p>
                   </div>

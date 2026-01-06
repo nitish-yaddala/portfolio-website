@@ -134,25 +134,25 @@ export default function Projects() {
 
         {/* Projects Grid */}
         {filteredProjects.length > 0 ? (
-          <div className="grid md:grid-cols-2 gap-10">
+          <div className="grid md:grid-cols-2 gap-6 md:gap-10">
             {filteredProjects.map((project, idx) => (
               <ScrollAnimation key={idx} delay={idx * 100}>
-                <div className="terminal-window rounded-lg p-8 card-hover group relative h-full flex flex-col">
-                  <div className="flex items-start justify-between mb-6 gap-4 flex-shrink-0">
-                    <h3 className="text-2xl font-bold text-white font-mono group-hover:text-hacker-green transition-colors flex-1 min-w-0">
+                <div className="terminal-window rounded-lg p-4 sm:p-6 md:p-8 card-hover group relative h-full flex flex-col overflow-hidden">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 sm:mb-6 gap-3 sm:gap-4 flex-shrink-0">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white font-mono group-hover:text-hacker-green transition-colors flex-1 min-w-0 break-words">
                       {project.name}
                     </h3>
                     <div className="flex-shrink-0">
-                      <span className="px-3 py-1.5 bg-hacker-purple/10 border border-hacker-purple/30 text-hacker-purple text-xs font-mono rounded whitespace-nowrap inline-flex items-center gap-1.5">
+                      <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-hacker-purple/10 border border-hacker-purple/30 text-hacker-purple text-xs font-mono rounded inline-flex items-center gap-1.5 whitespace-nowrap">
                         <Calendar size={12} className="flex-shrink-0" />
-                        <span>{project.period}</span>
+                        <span className="truncate">{project.period}</span>
                       </span>
                     </div>
                   </div>
 
-                  <div className="space-y-4 mb-8 flex-1">
+                  <div className="space-y-4 mb-6 sm:mb-8 flex-1">
                     {project.description.map((desc, descIdx) => (
-                      <p key={descIdx} className="text-gray-200 leading-relaxed text-base">
+                      <p key={descIdx} className="text-gray-200 leading-relaxed text-sm sm:text-base break-words">
                         {desc}
                       </p>
                     ))}
@@ -189,16 +189,16 @@ def analyze_response(response) -> List[str]:
                     </div>
                   )}
 
-                  <div className="pt-6 border-t border-hacker-green/30 flex-shrink-0">
-                    <div className="flex items-center gap-2 mb-4">
+                  <div className="pt-4 sm:pt-6 border-t border-hacker-green/30 flex-shrink-0">
+                    <div className="flex items-center gap-2 mb-3 sm:mb-4">
                       <Code size={18} className="text-hacker-green flex-shrink-0" />
-                      <span className="text-sm text-gray-400 font-mono uppercase tracking-wider">Tech Stack:</span>
+                      <span className="text-xs sm:text-sm text-gray-400 font-mono uppercase tracking-wider">Tech Stack:</span>
                     </div>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-2 sm:gap-3">
                       {project.tech.map((tech, techIdx) => (
                         <span
                           key={techIdx}
-                          className="px-3 py-1.5 bg-hacker-cyan/10 border border-hacker-cyan/40 text-hacker-cyan text-xs font-mono rounded hover:bg-hacker-cyan/20 hover:border-hacker-cyan/60 transition-all"
+                          className="px-2.5 sm:px-3 py-1 sm:py-1.5 bg-hacker-cyan/10 border border-hacker-cyan/40 text-hacker-cyan text-xs font-mono rounded hover:bg-hacker-cyan/20 hover:border-hacker-cyan/60 transition-all break-words"
                         >
                           {tech}
                         </span>

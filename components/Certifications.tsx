@@ -53,24 +53,24 @@ export default function Certifications() {
           <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-hacker-green/60 to-transparent mx-auto"></div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
           {resumeData.certifications.map((cert, idx) => {
             const colors = getIssuerColors(cert.issuer)
             const isCompleted = !cert.status || cert.status !== 'In Progress'
             
             return (
               <ScrollAnimation key={idx} delay={idx * 100}>
-                <div className="terminal-window rounded-lg p-8 card-hover group h-full flex flex-col relative overflow-hidden">
+                <div className="terminal-window rounded-lg p-4 sm:p-6 md:p-8 card-hover group h-full flex flex-col relative overflow-hidden">
                   {/* Badge Background */}
                   <div className={`absolute top-0 right-0 w-32 h-32 ${colors.badge} rounded-full blur-3xl opacity-30 -mr-16 -mt-16`}></div>
                   
-                  <div className="flex items-start gap-5 flex-1 relative z-10">
+                  <div className="flex items-start gap-3 sm:gap-4 md:gap-5 flex-1 relative z-10">
                     {/* Visual Badge */}
-                    <div className={`p-4 ${colors.bg} ${colors.border} border-2 rounded-lg group-hover:scale-110 transition-all flex-shrink-0 relative`}>
+                    <div className={`p-3 sm:p-4 ${colors.bg} ${colors.border} border-2 rounded-lg group-hover:scale-110 transition-all flex-shrink-0 relative`}>
                       {isCompleted ? (
-                        <Award className={colors.text} size={28} />
+                        <Award className={colors.text} size={24} />
                       ) : (
-                        <Clock className="text-hacker-cyan" size={28} />
+                        <Clock className="text-hacker-cyan" size={24} />
                       )}
                       {isCompleted && (
                         <div className="absolute -top-1 -right-1 w-4 h-4 bg-hacker-green rounded-full border-2 border-terminal-bg flex items-center justify-center">
@@ -79,15 +79,15 @@ export default function Certifications() {
                       )}
                     </div>
                     
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-start justify-between gap-4 mb-3">
-                        <h3 className="text-xl font-bold text-white font-mono group-hover:text-hacker-green transition-colors leading-tight">
+                    <div className="flex-1 min-w-0 overflow-hidden">
+                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-4 mb-3">
+                        <h3 className="text-lg sm:text-xl font-bold text-white font-mono group-hover:text-hacker-green transition-colors leading-tight break-words flex-1 min-w-0">
                           {cert.name}
                         </h3>
                         {cert.status && (
-                          <span className="px-3 py-1 bg-hacker-cyan/10 border border-hacker-cyan/30 text-hacker-cyan text-xs font-mono rounded whitespace-nowrap flex-shrink-0 flex items-center gap-1.5">
-                            <Clock size={12} />
-                            {cert.status}
+                          <span className="px-2.5 sm:px-3 py-1 bg-hacker-cyan/10 border border-hacker-cyan/30 text-hacker-cyan text-xs font-mono rounded flex-shrink-0 flex items-center gap-1.5 self-start">
+                            <Clock size={12} className="flex-shrink-0" />
+                            <span className="whitespace-nowrap">{cert.status}</span>
                           </span>
                         )}
                       </div>
