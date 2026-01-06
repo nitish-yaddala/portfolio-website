@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Download, Mail, Linkedin, Github, ChevronDown } from 'lucide-react'
+import { Download, Mail, Linkedin, Github, ChevronDown, FileText } from 'lucide-react'
 import { resumeData } from '@/data/resume'
 import TerminalPanel from './TerminalPanel'
 
@@ -9,6 +9,7 @@ export default function Hero() {
   const [typedText, setTypedText] = useState('')
   const fullText = resumeData.personal.title
   const [showCursor, setShowCursor] = useState(true)
+  const [isResumeMenuOpen, setIsResumeMenuOpen] = useState(false)
 
   useEffect(() => {
     let index = 0
@@ -66,17 +67,46 @@ export default function Hero() {
             </div>
 
             <div className="flex flex-wrap gap-4 pt-2">
-              <a
-                href="/resume.pdf"
-                download="Muni_Nitish_Kumar_Yaddala_Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-gradient px-7 py-3.5 bg-hacker-green/10 border-hacker-green/50 text-hacker-green font-mono text-sm hover:border-hacker-green hover:bg-hacker-green/20 focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg flex items-center gap-2.5 rounded transition-all"
-                aria-label="Download resume"
-              >
-                <Download size={18} />
-                Download Resume
-              </a>
+              <div className="relative">
+                <button
+                  onClick={() => setIsResumeMenuOpen(!isResumeMenuOpen)}
+                  onBlur={() => setTimeout(() => setIsResumeMenuOpen(false), 200)}
+                  className="btn-gradient px-7 py-3.5 bg-hacker-green/10 border-hacker-green/50 text-hacker-green font-mono text-sm hover:border-hacker-green hover:bg-hacker-green/20 focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg flex items-center gap-2.5 rounded transition-all"
+                  aria-label="Resume options"
+                  aria-expanded={isResumeMenuOpen}
+                >
+                  <FileText size={18} />
+                  Resume
+                  <ChevronDown size={16} className={`transition-transform ${isResumeMenuOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {isResumeMenuOpen && (
+                  <div className="absolute left-0 top-full mt-2 w-56 bg-terminal-bg/95 backdrop-blur-xl border border-hacker-green/30 rounded-lg shadow-lg z-50">
+                    <div className="py-2">
+                      <a
+                        href="/resume.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setIsResumeMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 font-mono text-sm text-gray-300 hover:text-hacker-green hover:bg-hacker-green/10 transition-all focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-inset"
+                        aria-label="View resume in new tab"
+                      >
+                        <FileText size={16} className="text-hacker-green" />
+                        View Resume
+                      </a>
+                      <a
+                        href="/resume.pdf"
+                        download="Muni_Nitish_Kumar_Yaddala_Resume.pdf"
+                        onClick={() => setIsResumeMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 font-mono text-sm text-gray-300 hover:text-hacker-green hover:bg-hacker-green/10 transition-all focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-inset"
+                        aria-label="Download resume"
+                      >
+                        <Download size={16} className="text-hacker-green" />
+                        Download Resume
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div>
               <a
                 href={resumeData.personal.linkedin}
                 target="_blank"

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Mail, MapPin, Linkedin, Github, Send, CheckCircle, AlertCircle, Download } from 'lucide-react'
+import { Mail, MapPin, Linkedin, Github, Send, CheckCircle, AlertCircle, Download, FileText, ChevronDown } from 'lucide-react'
 import { resumeData } from '@/data/resume'
 import ScrollAnimation from './ScrollAnimation'
 import CopyToClipboard from './CopyToClipboard'
@@ -16,6 +16,7 @@ export default function Contact() {
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [isResumeMenuOpen, setIsResumeMenuOpen] = useState(false)
 
   const validateEmail = (email: string) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -117,19 +118,49 @@ export default function Contact() {
                   <div className="text-white">{resumeData.personal.location}</div>
                 </div>
               </div>
-              <a
-                href="/resume.pdf"
-                download="Muni_Nitish_Kumar_Yaddala_Resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 p-4 terminal-window rounded-lg hover:glow-border transition-all group"
-              >
-                <Download className="text-hacker-green group-hover:scale-110 transition-transform" size={20} />
-                <div>
-                  <div className="text-sm text-gray-400 font-mono">Resume</div>
-                  <div className="text-white group-hover:text-hacker-green transition-colors">Download PDF</div>
-                </div>
-              </a>
+              <div className="relative">
+                <button
+                  onClick={() => setIsResumeMenuOpen(!isResumeMenuOpen)}
+                  onBlur={() => setTimeout(() => setIsResumeMenuOpen(false), 200)}
+                  className="w-full flex items-center gap-3 p-4 terminal-window rounded-lg hover:glow-border transition-all group text-left"
+                  aria-label="Resume options"
+                  aria-expanded={isResumeMenuOpen}
+                >
+                  <FileText className="text-hacker-green group-hover:scale-110 transition-transform flex-shrink-0" size={20} />
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm text-gray-400 font-mono">Resume</div>
+                    <div className="text-white group-hover:text-hacker-green transition-colors">View or Download</div>
+                  </div>
+                  <ChevronDown size={16} className={`text-gray-400 transition-transform flex-shrink-0 ${isResumeMenuOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {isResumeMenuOpen && (
+                  <div className="absolute left-0 right-0 top-full mt-2 bg-terminal-bg/95 backdrop-blur-xl border border-hacker-green/30 rounded-lg shadow-lg z-50">
+                    <div className="py-2">
+                      <a
+                        href="/resume.pdf"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setIsResumeMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 font-mono text-sm text-gray-300 hover:text-hacker-green hover:bg-hacker-green/10 transition-all focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-inset"
+                        aria-label="View resume in new tab"
+                      >
+                        <FileText size={16} className="text-hacker-green" />
+                        View Resume
+                      </a>
+                      <a
+                        href="/resume.pdf"
+                        download="Muni_Nitish_Kumar_Yaddala_Resume.pdf"
+                        onClick={() => setIsResumeMenuOpen(false)}
+                        className="flex items-center gap-3 px-4 py-2.5 font-mono text-sm text-gray-300 hover:text-hacker-green hover:bg-hacker-green/10 transition-all focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-inset"
+                        aria-label="Download resume"
+                      >
+                        <Download size={16} className="text-hacker-green" />
+                        Download Resume
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div>
               <div className="flex gap-4 pt-4">
                 <a
                   href={resumeData.personal.linkedin}
