@@ -79,8 +79,8 @@ export default function Navigation() {
         transform: 'translateZ(0)' // GPU acceleration
       }}
     >
-      <div className="w-full mx-auto px-3 sm:px-4 lg:px-6">
-        <div className="flex items-center justify-between h-18 gap-2">
+      <div className="w-full max-w-[99vw] mx-auto px-3 sm:px-4 lg:px-6 xl:px-8">
+        <div className="flex items-center justify-between h-18 gap-2 lg:gap-4">
           <button
             onClick={() => scrollToSection('home')}
             className="flex items-center gap-2 font-mono text-lg sm:text-xl font-bold text-hacker-green transition-all hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg rounded px-2 whitespace-nowrap flex-shrink-0"
@@ -111,8 +111,8 @@ export default function Navigation() {
           </button>
 
           {/* Desktop navigation: Show items with overflow handling */}
-          <div className="hidden lg:flex items-center flex-1 min-w-0 ml-4">
-            <div className="flex items-center space-x-3 xl:space-x-4 overflow-x-auto scrollbar-hide flex-1">
+          <div className="hidden lg:flex items-center flex-1 min-w-0 ml-4 max-w-none">
+            <div className="flex items-center space-x-3 xl:space-x-4 2xl:space-x-5 flex-1 overflow-hidden">
               {navItems.slice(0, 7).map((item) => (
                 <button
                   key={item.id}
@@ -173,7 +173,7 @@ export default function Navigation() {
           
           {/* Medium screen: Show fewer items with dropdown */}
           <div className="hidden md:flex lg:hidden items-center space-x-3 flex-1 min-w-0 ml-4">
-            <div className="flex items-center space-x-2 overflow-x-auto scrollbar-hide">
+            <div className="flex items-center space-x-2 overflow-hidden">
               {navItems.slice(0, 4).map((item) => (
                 <button
                   key={item.id}

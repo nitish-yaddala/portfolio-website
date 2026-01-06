@@ -31,6 +31,16 @@ body {
   animation-duration: 0.3s;
 }
 
+/* Hide scrollbar but allow scrolling */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
 /* Light mode styles - Pleasant, easy on eyes palette */
 html.light body {
   background-color: #fafafa; /* Warm off-white, reduces eye strain */
