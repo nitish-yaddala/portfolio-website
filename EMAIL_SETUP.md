@@ -60,11 +60,26 @@ Replace:
 
 ### Emails not sending?
 
-1. **Check API Key**: Make sure `RESEND_API_KEY` is set correctly
-2. **Check Email Addresses**: Ensure `RESEND_FROM_EMAIL` and `CONTACT_EMAIL` are valid
-3. **Check Resend Dashboard**: Look at the [Logs](https://resend.com/emails) section in Resend to see if there are any errors
-4. **Check Browser Console**: Open browser DevTools and check for any errors in the console
-5. **Check Vercel Logs**: If deployed, check Vercel function logs for errors
+1. **Redeploy After Adding Environment Variables**
+   - Environment variables only apply to NEW deployments
+   - Go to Vercel Dashboard → Deployments → Click "..." → "Redeploy"
+
+2. **Check API Key**: Make sure `RESEND_API_KEY` is set correctly
+3. **Check Email Addresses**: Ensure `RESEND_FROM_EMAIL` and `CONTACT_EMAIL` are valid
+4. **Check Resend Dashboard**: Look at the [Logs](https://resend.com/emails) section in Resend to see if there are any errors
+5. **Check Browser Console**: 
+   - Open browser DevTools (F12) → Console tab
+   - Submit the form and look for errors
+6. **Check Vercel Function Logs**: 
+   - Vercel Dashboard → Deployments → Latest deployment → Functions → `/api/contact` → View Function Logs
+   - Look for Resend API errors or authentication issues
+
+### Form shows "Message sent successfully" but no email received
+
+1. **Check Spam Folder**: Emails from `onboarding@resend.dev` might go to spam
+2. **Check Resend Logs**: Go to https://resend.com/emails to see delivery status
+3. **Verify CONTACT_EMAIL**: Make sure it's set to your correct email address in Vercel environment variables
+4. **Try a different email address**: Test with another email to see if it's a delivery issue
 
 ### Using a different email service?
 
@@ -72,12 +87,3 @@ If you prefer to use a different service (SendGrid, Mailgun, etc.), you'll need 
 1. Update the API route at `app/api/contact/route.ts`
 2. Install the appropriate npm package
 3. Update the environment variables
-
-### Free Alternative: Web3Forms
-
-If you want a simpler, no-setup solution, you can use Web3Forms:
-1. Go to [https://web3forms.com](https://web3forms.com)
-2. Get your access key
-3. Update the Contact component to use Web3Forms instead
-
-Let me know if you need help setting this up!
