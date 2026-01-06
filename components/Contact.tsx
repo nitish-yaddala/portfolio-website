@@ -49,13 +49,32 @@ export default function Contact() {
       return
     }
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 500))
-    
-    setStatus('success')
-    setFormData({ name: '', email: '', subject: '', message: '' })
-    setIsSubmitting(false)
-    setTimeout(() => setStatus('idle'), 5000)
+    // Send email via API
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message')
+      }
+
+      setStatus('success')
+      setFormData({ name: '', email: '', subject: '', message: '' })
+    } catch (error) {
+      console.error('Form submission error:', error)
+      setStatus('error')
+      setErrors({ submit: error instanceof Error ? error.message : 'Failed to send message. Please try again or use the email link above.' })
+    } finally {
+      setIsSubmitting(false)
+      setTimeout(() => setStatus('idle'), 5000)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -280,18 +299,21 @@ export default function Contact() {
                 )}
               </div>
 
-              <div className="text-xs text-gray-500 font-mono mb-4">
-                * This is a client-side form. For actual contact, please use the email link above.
-              </div>
+              {errors.submit && (
+                <div className="flex items-center gap-2 text-hacker-pink text-sm font-mono p-3 bg-hacker-pink/10 border border-hacker-pink/30 rounded">
+                  <AlertCircle size={16} />
+                  <span>{errors.submit}</span>
+                </div>
+              )}
 
               {status === 'success' && (
                 <div className="flex items-center gap-2 text-hacker-green text-sm font-mono p-3 bg-hacker-green/10 border border-hacker-green/30 rounded">
                   <CheckCircle size={16} />
-                  <span>Message sent! (Demo only - use email link for actual contact)</span>
+                  <span>Message sent successfully! I'll get back to you soon.</span>
                 </div>
               )}
 
-              {status === 'error' && (
+              {status === 'error' && !errors.submit && (
                 <div className="flex items-center gap-2 text-hacker-pink text-sm font-mono p-3 bg-hacker-pink/10 border border-hacker-pink/30 rounded">
                   <AlertCircle size={16} />
                   <span>Please fill in all required fields.</span>
