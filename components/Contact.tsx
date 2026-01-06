@@ -309,7 +309,7 @@ export default function Contact() {
               {status === 'success' && (
                 <div className="flex items-center gap-2 text-hacker-green text-sm font-mono p-3 bg-hacker-green/10 border border-hacker-green/30 rounded">
                   <CheckCircle size={16} />
-                  <span>Message sent successfully! I'll get back to you soon.</span>
+                  <span>Message sent successfully! I&apos;ll get back to you soon.</span>
                 </div>
               )}
 
