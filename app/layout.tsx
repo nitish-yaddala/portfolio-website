@@ -69,7 +69,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
-        <ThemeProvider>
+        <PageLoadingBar />
+        <ToastProvider>
+          <ThemeProvider>
           <StructuredData />
           <KeyboardShortcuts />
           <Analytics />
@@ -103,8 +105,8 @@ export default function RootLayout({
           </div>
                 </ErrorBoundaryWrapper>
               </ThemeProvider>
-              </ToastProvider>
-            </body>
+            </ToastProvider>
+          </body>
     </html>
   )
 }
