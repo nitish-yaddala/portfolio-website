@@ -6,6 +6,8 @@ import Navigation from '@/components/Navigation'
 import StructuredData from '@/components/StructuredData'
 import KeyboardShortcuts from '@/components/KeyboardShortcuts'
 import Analytics from '@/components/Analytics'
+import { ToastProvider } from '@/components/Toast'
+import PageLoadingBar from '@/components/PageLoadingBar'
 import ErrorBoundaryWrapper from '@/components/ErrorBoundaryWrapper'
 import CursorTrail from '@/components/CursorTrail'
 import ParallaxBackground from '@/components/ParallaxBackground'
@@ -99,9 +101,10 @@ export default function RootLayout({
               {children}
             </main>
           </div>
-        </ErrorBoundaryWrapper>
-        </ThemeProvider>
-      </body>
+                </ErrorBoundaryWrapper>
+              </ThemeProvider>
+              </ToastProvider>
+            </body>
     </html>
   )
 }

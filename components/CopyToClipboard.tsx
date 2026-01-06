@@ -16,6 +16,7 @@ export default function CopyToClipboard({ text, className = '', children }: Copy
     try {
       await navigator.clipboard.writeText(text)
       setCopied(true)
+      toast.showToast('Copied to clipboard!', 'success', 2000)
       setTimeout(() => setCopied(false), 2000)
     } catch (err) {
       console.error('Failed to copy:', err)

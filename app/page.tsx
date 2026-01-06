@@ -19,6 +19,7 @@ import PerformanceMetrics from '@/components/PerformanceMetrics'
 import RecentActivity from '@/components/RecentActivity'
 import SocialProof from '@/components/SocialProof'
 import SecurityAdvisories from '@/components/SecurityAdvisories'
+import ScrollProgress from '@/components/ScrollProgress'
 
 export default function Home() {
   return (
@@ -44,6 +45,7 @@ export default function Home() {
       <BackToTop />
       <ShareButtons />
       <SectionJumpMenu />
+      <ScrollProgress />
     </>
   )
 }

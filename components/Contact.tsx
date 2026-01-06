@@ -5,6 +5,7 @@ import { Mail, MapPin, Linkedin, Github, Send, CheckCircle, AlertCircle, Downloa
 import { resumeData } from '@/data/resume'
 import ScrollAnimation from './ScrollAnimation'
 import CopyToClipboard from './CopyToClipboard'
+import { useToast } from './Toast'
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -71,10 +72,13 @@ export default function Contact() {
 
       setStatus('success')
       setFormData({ name: '', email: '', subject: '', message: '' })
+      toast.showToast('Message sent successfully! I\'ll get back to you soon.', 'success')
     } catch (error) {
       console.error('Form submission error:', error)
       setStatus('error')
-      setErrors({ submit: error instanceof Error ? error.message : 'Failed to send message. Please try again or use the email link above.' })
+      const errorMessage = error instanceof Error ? error.message : 'Failed to send message. Please try again or use the email link above.'
+      setErrors({ submit: errorMessage })
+      toast.showToast(errorMessage, 'error')
     } finally {
       setIsSubmitting(false)
       setTimeout(() => setStatus('idle'), 5000)
