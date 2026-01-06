@@ -112,12 +112,12 @@ export default function Navigation() {
 
           {/* Desktop navigation: Show items with overflow handling */}
           <div className="hidden lg:flex items-center flex-1 min-w-0 ml-4 max-w-none">
-            <div className="flex items-center gap-2 xl:gap-3 2xl:gap-4 flex-1 overflow-hidden justify-start">
+            <div className="flex items-center gap-2 xl:gap-3 2xl:gap-4 flex-1 justify-start" style={{ overflow: 'visible' }}>
               {navItems.slice(0, 7).map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`font-mono text-xs transition-all relative py-2 focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg rounded px-1.5 whitespace-nowrap flex-shrink-0 ${
+                  className={`font-mono text-xs transition-all relative py-2 pb-3 focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg rounded px-1.5 whitespace-nowrap flex-shrink-0 ${
                     activeSection === item.id
                       ? 'text-hacker-green'
                       : 'text-gray-400 hover:text-hacker-green'
@@ -127,7 +127,7 @@ export default function Navigation() {
                 >
                   {item.label}
                   {activeSection === item.id && (
-                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-hacker-green/70 to-transparent"></span>
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-hacker-green/70 to-transparent z-10"></span>
                   )}
                 </button>
               ))}
@@ -173,12 +173,12 @@ export default function Navigation() {
           
           {/* Medium screen: Show fewer items with dropdown */}
           <div className="hidden md:flex lg:hidden items-center space-x-3 flex-1 min-w-0 ml-4">
-            <div className="flex items-center space-x-2 overflow-hidden">
+            <div className="flex items-center space-x-2" style={{ overflow: 'visible' }}>
               {navItems.slice(0, 4).map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`font-mono text-xs transition-all relative py-2 focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg rounded px-1.5 whitespace-nowrap flex-shrink-0 ${
+                  className={`font-mono text-xs transition-all relative py-2 pb-3 focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg rounded px-1.5 whitespace-nowrap flex-shrink-0 ${
                     activeSection === item.id
                       ? 'text-hacker-green'
                       : 'text-gray-400 hover:text-hacker-green'
@@ -188,7 +188,7 @@ export default function Navigation() {
                 >
                   {item.label}
                   {activeSection === item.id && (
-                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-hacker-green/70 to-transparent"></span>
+                    <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-hacker-green/70 to-transparent z-10"></span>
                   )}
                 </button>
               ))}
