@@ -18,6 +18,7 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isResumeMenuOpen, setIsResumeMenuOpen] = useState(false)
+  const toast = useToast()
 
   const validateEmail = (email: string) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
