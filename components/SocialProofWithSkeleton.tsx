@@ -81,8 +81,8 @@ export default function SocialProof() {
               <div className="grid md:grid-cols-3 gap-6">
                 {[1, 2, 3].map((i) => (
                   <div key={i} className="text-center">
-                    <SkeletonLoader variant="circular" width={48} height={48} className="mx-auto mb-3" />
-                    <SkeletonLoader variant="text" lines={2} className="mx-auto" style={{ maxWidth: '120px' }} />
+                    <SkeletonLoader variant="circle" width="48px" height="48px" className="mx-auto mb-3" />
+                    <SkeletonLoader variant="text" count={2} width="120px" className="mx-auto" />
                   </div>
                 ))}
               </div>

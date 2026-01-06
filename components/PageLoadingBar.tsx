@@ -8,7 +8,7 @@ export default function PageLoadingBar() {
 
   useEffect(() => {
     // Only show loading bar on initial page load
-    if (typeof window !== 'undefined' && !loading) {
+    if (typeof window !== 'undefined') {
       setLoading(true)
       setProgress(0)
 
@@ -39,6 +39,7 @@ export default function PageLoadingBar() {
         clearTimeout(timeout)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!loading) return null
