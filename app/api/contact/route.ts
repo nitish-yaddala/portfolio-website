@@ -40,11 +40,13 @@ function getSimpleRateLimit(identifier: string): { allowed: boolean; remaining: 
     memoryStore.set(identifier, { count: 1, resetTime: now + windowMs })
     // Clean up old entries periodically
     if (memoryStore.size > 1000) {
-      for (const [key, value] of memoryStore.entries()) {
+      const keysToDelete: string[] = []
+      memoryStore.forEach((value, key) => {
         if (now > value.resetTime) {
-          memoryStore.delete(key)
+          keysToDelete.push(key)
         }
-      }
+      })
+      keysToDelete.forEach(key => memoryStore.delete(key))
     }
     return { allowed: true, remaining: maxRequests - 1 }
   }
