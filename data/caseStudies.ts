@@ -241,8 +241,9 @@ The testing was conducted entirely within authenticated sessions and involved no
       'CWE-639: Authorization Bypass Through User-Controlled Key',
       'OWASP Top 10: Broken Access Control'
     ],
-    societalImpact: `This vulnerability exposed sensitive personal information of approximately 2,000 students registered in the scholarship portal. The exposed data included:
+    societalImpact: `This vulnerability exposed sensitive personal information of approximately 2,000 students registered in the scholarship portal.
 
+Exposed Data:
 - Aadhaar numbers (12-digit unique identifiers)
 - Passport numbers and visa details
 - Family income information
@@ -253,8 +254,9 @@ The testing was conducted entirely within authenticated sessions and involved no
 - Login credentials
 - Applicant photographs
 
-The sequential nature of applicant IDs made it possible for an attacker to systematically enumerate and scrape all registered user data. Such exposure can lead to:
+The sequential nature of applicant IDs made it possible for an attacker to systematically enumerate and scrape all registered user data.
 
+Potential Consequences:
 - Identity theft and fraud
 - Financial fraud using exposed bank account information
 - Unauthorized use of legal documents (passport, visa)

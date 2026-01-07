@@ -10,6 +10,125 @@ interface CaseStudyDetailProps {
   onBack: () => void
 }
 
+// Function to format text with lists and bold headings
+function formatTextWithLists(text: string) {
+  const lines = text.split('\n')
+  const elements: JSX.Element[] = []
+  let currentList: string[] = []
+  let currentNumberedList: Array<{ num: string; text: string }> = []
+  let currentParagraph: string[] = []
+  let listKey = 0
+
+  const flushParagraph = () => {
+    if (currentParagraph.length > 0) {
+      const paragraphText = currentParagraph.join(' ').trim()
+      if (paragraphText) {
+        elements.push(
+          <p key={`p-${elements.length}`} className="mb-4">
+            {paragraphText}
+          </p>
+        )
+      }
+      currentParagraph = []
+    }
+  }
+
+  const flushBulletList = () => {
+    if (currentList.length > 0) {
+      elements.push(
+        <ul key={`list-${listKey++}`} className="space-y-2 mb-4 ml-4">
+          {currentList.map((item, idx) => (
+            <li key={idx} className="flex items-start gap-3">
+              <span className="text-hacker-green font-mono mt-1 flex-shrink-0">•</span>
+              <span className="text-gray-200 flex-1">{item.trim()}</span>
+            </li>
+          ))}
+        </ul>
+      )
+      currentList = []
+    }
+  }
+
+  const flushNumberedList = () => {
+    if (currentNumberedList.length > 0) {
+      elements.push(
+        <ol key={`numbered-${listKey++}`} className="space-y-3 mb-4 ml-6 list-decimal">
+          {currentNumberedList.map((item, idx) => {
+            const parts = item.text.split(':')
+            const hasHeading = parts.length > 1 && parts[0].length < 50
+            return (
+              <li key={idx} className="text-gray-200 pl-2">
+                {hasHeading ? (
+                  <>
+                    <strong className="text-white font-semibold">{parts[0].trim()}:</strong>
+                    <span className="ml-2">{parts.slice(1).join(':').trim()}</span>
+                  </>
+                ) : (
+                  item.text.trim()
+                )}
+              </li>
+            )
+          })}
+        </ol>
+      )
+      currentNumberedList = []
+    }
+  }
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim()
+    
+    // Check for bullet list item (starts with -)
+    if (line.startsWith('- ')) {
+      flushParagraph()
+      flushNumberedList()
+      currentList.push(line.substring(2))
+      continue
+    }
+    
+    // Check for numbered list item (starts with number.)
+    const numberedMatch = line.match(/^(\d+)\.\s+(.+)$/)
+    if (numberedMatch) {
+      flushParagraph()
+      flushBulletList()
+      currentNumberedList.push({ num: numberedMatch[1], text: numberedMatch[2] })
+      continue
+    }
+    
+    // Check for subheading (ends with colon, short line, not a URL)
+    if (line.endsWith(':') && line.length < 80 && !line.includes('http') && !line.includes('@')) {
+      flushParagraph()
+      flushBulletList()
+      flushNumberedList()
+      elements.push(
+        <h3 key={`subheading-${listKey++}`} className="text-lg font-bold text-white font-mono mb-3 mt-4">
+          {line}
+        </h3>
+      )
+      continue
+    }
+    
+    // Regular paragraph text
+    if (line) {
+      flushBulletList()
+      flushNumberedList()
+      currentParagraph.push(line)
+    } else {
+      // Empty line - flush all
+      flushParagraph()
+      flushBulletList()
+      flushNumberedList()
+    }
+  }
+
+  // Flush remaining
+  flushParagraph()
+  flushBulletList()
+  flushNumberedList()
+
+  return <>{elements}</>
+}
+
 export default function CaseStudyDetail({ caseStudy, onBack }: CaseStudyDetailProps) {
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8">
@@ -123,9 +242,9 @@ export default function CaseStudyDetail({ caseStudy, onBack }: CaseStudyDetailPr
         <ScrollAnimation delay={400}>
           <div className="terminal-window rounded-lg p-6 sm:p-8 mb-8">
             <h2 className="text-2xl font-bold text-white font-mono mb-4">Detection and Response Strategy</h2>
-            <p className="text-gray-200 leading-relaxed whitespace-pre-line">
-              {caseStudy.detectionStrategy}
-            </p>
+            <div className="text-gray-200 leading-relaxed">
+              {formatTextWithLists(caseStudy.detectionStrategy)}
+            </div>
           </div>
         </ScrollAnimation>
 
@@ -272,9 +391,9 @@ export default function CaseStudyDetail({ caseStudy, onBack }: CaseStudyDetailPr
         <ScrollAnimation delay={800}>
           <div className="terminal-window rounded-lg p-6 sm:p-8 mb-8">
             <h2 className="text-2xl font-bold text-white font-mono mb-4">Societal and National Impact</h2>
-            <p className="text-gray-200 leading-relaxed whitespace-pre-line">
-              {caseStudy.societalImpact}
-            </p>
+            <div className="text-gray-200 leading-relaxed">
+              {formatTextWithLists(caseStudy.societalImpact)}
+            </div>
           </div>
         </ScrollAnimation>
 
@@ -282,9 +401,9 @@ export default function CaseStudyDetail({ caseStudy, onBack }: CaseStudyDetailPr
         <ScrollAnimation delay={900}>
           <div className="terminal-window rounded-lg p-6 sm:p-8 mb-8">
             <h2 className="text-2xl font-bold text-white font-mono mb-4">Professional Contribution</h2>
-            <p className="text-gray-200 leading-relaxed whitespace-pre-line">
-              {caseStudy.professionalContribution}
-            </p>
+            <div className="text-gray-200 leading-relaxed">
+              {formatTextWithLists(caseStudy.professionalContribution)}
+            </div>
           </div>
         </ScrollAnimation>
 
