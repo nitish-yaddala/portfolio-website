@@ -21,6 +21,8 @@ import SocialProof from '@/components/SocialProofWithSkeleton'
 import SecurityAdvisories from '@/components/SecurityAdvisories'
 import CaseStudies from '@/components/CaseStudies'
 import ScrollProgress from '@/components/ScrollProgress'
+import Testimonials from '@/components/Testimonials'
+import GitHubActivity from '@/components/GitHubActivity'
 
 export default function Home() {
   return (
@@ -36,6 +38,8 @@ export default function Home() {
       <Workflow />
       <Research />
       <Achievements />
+      <Testimonials />
+      <GitHubActivity />
       <SecurityAdvisories />
       <Education />
       <Certifications />

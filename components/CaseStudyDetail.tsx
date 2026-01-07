@@ -149,7 +149,7 @@ export default function CaseStudyDetail({ caseStudy, onBack }: CaseStudyDetailPr
         {/* Header */}
         <div className="mb-12">
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-3 bg-hacker-purple/10 rounded-lg">
+            <div className="p-3 bg-hacker-purple/10 rounded-lg border border-hacker-purple/30">
               <Shield className="text-hacker-purple" size={28} />
             </div>
             <div className="flex-1">
@@ -171,13 +171,13 @@ export default function CaseStudyDetail({ caseStudy, onBack }: CaseStudyDetailPr
                 </span>
               </div>
               <div className="flex flex-wrap gap-2">
-                <span className="px-3 py-1.5 bg-hacker-purple/10 border border-hacker-purple/30 text-hacker-purple text-xs font-mono rounded">
+                <span className="px-3 py-1.5 bg-hacker-purple/10 border border-hacker-purple/30 text-hacker-purple text-xs font-mono rounded hover:bg-hacker-purple/20 transition-colors">
                   {caseStudy.category}
                 </span>
                 {caseStudy.tags.map((tag, idx) => (
                   <span
                     key={idx}
-                    className="px-3 py-1.5 bg-hacker-cyan/10 border border-hacker-cyan/40 text-hacker-cyan text-xs font-mono rounded"
+                    className="px-3 py-1.5 bg-hacker-cyan/10 border border-hacker-cyan/40 text-hacker-cyan text-xs font-mono rounded hover:bg-hacker-cyan/20 transition-colors"
                   >
                     {tag}
                   </span>
@@ -245,7 +245,12 @@ export default function CaseStudyDetail({ caseStudy, onBack }: CaseStudyDetailPr
         {/* Detection and Response Strategy */}
         <ScrollAnimation delay={400}>
           <div className="terminal-window rounded-lg p-6 sm:p-8 mb-8">
-            <h2 className="text-2xl font-bold text-white font-mono mb-4">Detection and Response Strategy</h2>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-hacker-green/10 rounded-lg">
+                <Shield className="text-hacker-green" size={20} />
+              </div>
+              <h2 className="text-2xl font-bold text-white font-mono">Detection and Response Strategy</h2>
+            </div>
             <div className="text-gray-200 leading-relaxed">
               {formatTextWithLists(caseStudy.detectionStrategy)}
             </div>
@@ -255,7 +260,12 @@ export default function CaseStudyDetail({ caseStudy, onBack }: CaseStudyDetailPr
         {/* Tools and Techniques */}
         <ScrollAnimation delay={500}>
           <div className="terminal-window rounded-lg p-6 sm:p-8 mb-8">
-            <h2 className="text-2xl font-bold text-white font-mono mb-4">Tools and Techniques Used</h2>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-hacker-cyan/10 rounded-lg">
+                <Tag className="text-hacker-cyan" size={20} />
+              </div>
+              <h2 className="text-2xl font-bold text-white font-mono">Tools and Techniques Used</h2>
+            </div>
             <ul className="space-y-3">
               {caseStudy.toolsAndTechniques.map((tool, idx) => {
                 const parts = tool.split(':')
@@ -441,7 +451,12 @@ export default function CaseStudyDetail({ caseStudy, onBack }: CaseStudyDetailPr
         {/* Societal Impact */}
         <ScrollAnimation delay={800}>
           <div className="terminal-window rounded-lg p-6 sm:p-8 mb-8">
-            <h2 className="text-2xl font-bold text-white font-mono mb-4">Societal and National Impact</h2>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-hacker-purple/10 rounded-lg">
+                <AlertTriangle className="text-hacker-purple" size={20} />
+              </div>
+              <h2 className="text-2xl font-bold text-white font-mono">Societal and National Impact</h2>
+            </div>
             <div className="text-gray-200 leading-relaxed">
               {formatTextWithLists(caseStudy.societalImpact)}
             </div>
@@ -451,7 +466,12 @@ export default function CaseStudyDetail({ caseStudy, onBack }: CaseStudyDetailPr
         {/* Professional Contribution */}
         <ScrollAnimation delay={900}>
           <div className="terminal-window rounded-lg p-6 sm:p-8 mb-8">
-            <h2 className="text-2xl font-bold text-white font-mono mb-4">Professional Contribution</h2>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2 bg-hacker-pink/10 rounded-lg">
+                <User className="text-hacker-pink" size={20} />
+              </div>
+              <h2 className="text-2xl font-bold text-white font-mono">Professional Contribution</h2>
+            </div>
             <div className="text-gray-200 leading-relaxed">
               {formatTextWithLists(caseStudy.professionalContribution)}
             </div>

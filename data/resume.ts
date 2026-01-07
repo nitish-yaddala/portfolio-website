@@ -38,6 +38,15 @@ export interface SkillCategory {
   description?: string;
 }
 
+export interface Testimonial {
+  name: string;
+  role: string;
+  company: string;
+  text: string;
+  linkedin?: string;
+  avatar?: string;
+}
+
 export interface ResumeData {
   personal: {
     name: string;
@@ -49,6 +58,7 @@ export interface ResumeData {
     github: string;
     summary: string[];
   };
+  testimonials?: Testimonial[];
   experience: Experience[];
   projects: Project[];
   certifications: Certification[];
@@ -415,5 +425,21 @@ export const resumeData: ResumeData = {
     webAppsTested: 43,
     mobileAppsTested: 2,
     criticalVulns: 20
-  }
+  },
+  testimonials: [
+    {
+      name: "Colleague/Manager",
+      role: "Senior Security Engineer",
+      company: "Previous Company",
+      text: "Nitish demonstrates exceptional technical depth in application security and penetration testing. His systematic approach to vulnerability discovery and responsible disclosure practices set a high standard for security research.",
+      linkedin: "#"
+    },
+    {
+      name: "Team Lead",
+      role: "Security Team Lead",
+      company: "Organization",
+      text: "Working with Nitish has been a great experience. His ability to identify complex security vulnerabilities and communicate findings clearly to both technical and non-technical stakeholders is outstanding.",
+      linkedin: "#"
+    }
+  ]
 };

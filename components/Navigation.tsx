@@ -16,6 +16,8 @@ const navItems = [
   { id: 'workflow', label: 'Workflow' },
   { id: 'research', label: 'Research' },
   { id: 'achievements', label: 'Achievements' },
+  { id: 'testimonials', label: 'Testimonials' },
+  { id: 'github-activity', label: 'GitHub' },
   { id: 'security-advisories', label: 'Advisories' },
   { id: 'education', label: 'Education' },
   { id: 'certifications', label: 'Certifications' },
