@@ -257,12 +257,25 @@ export default function CaseStudyDetail({ caseStudy, onBack }: CaseStudyDetailPr
           <div className="terminal-window rounded-lg p-6 sm:p-8 mb-8">
             <h2 className="text-2xl font-bold text-white font-mono mb-4">Tools and Techniques Used</h2>
             <ul className="space-y-3">
-              {caseStudy.toolsAndTechniques.map((tool, idx) => (
-                <li key={idx} className="flex items-start gap-3">
-                  <span className="text-hacker-green font-mono mt-1">•</span>
-                  <span className="text-gray-200 flex-1">{tool}</span>
-                </li>
-              ))}
+              {caseStudy.toolsAndTechniques.map((tool, idx) => {
+                const parts = tool.split(':')
+                const hasHeading = parts.length > 1 && parts[0].length < 80
+                return (
+                  <li key={idx} className="flex items-start gap-3">
+                    <span className="text-hacker-green font-mono mt-1">•</span>
+                    <span className="text-gray-200 flex-1">
+                      {hasHeading ? (
+                        <>
+                          <strong className="text-white font-semibold">{parts[0].trim()}:</strong>
+                          <span className="ml-2">{parts.slice(1).join(':').trim()}</span>
+                        </>
+                      ) : (
+                        tool
+                      )}
+                    </span>
+                  </li>
+                )
+              })}
             </ul>
           </div>
         </ScrollAnimation>
