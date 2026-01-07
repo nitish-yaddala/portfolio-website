@@ -3,8 +3,14 @@ import { Resend } from 'resend'
 import { Ratelimit } from '@upstash/ratelimit'
 import { Redis } from '@upstash/redis'
 
-// Initialize Resend with API key from environment variable
-const resend = new Resend(process.env.RESEND_API_KEY)
+// Lazy initialization of Resend - only create when needed and API key is available
+function getResend() {
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) {
+    throw new Error('RESEND_API_KEY environment variable is not set')
+  }
+  return new Resend(apiKey)
+}
 
 // Initialize Redis for rate limiting (using Upstash)
 // If UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN are not set,
@@ -133,10 +139,19 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Check if Resend API key is configured
+    if (!process.env.RESEND_API_KEY) {
+      return NextResponse.json(
+        { error: 'Email service is not configured' },
+        { status: 503 }
+      )
+    }
+
     // Get recipient email from environment variable or use default
     const recipientEmail = process.env.CONTACT_EMAIL || process.env.RESEND_FROM_EMAIL || 'your-email@example.com'
 
-    // Send email using Resend
+    // Initialize Resend and send email
+    const resend = getResend()
     const { data, error } = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || 'Portfolio Contact <onboarding@resend.dev>',
       to: [recipientEmail],
