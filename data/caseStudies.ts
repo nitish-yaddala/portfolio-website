@@ -134,12 +134,7 @@ I used a combination of psychological probing and technical deception to gather 
 
 Technical vigilance and documentation helps prevent wider victimization, enables cybercrime units to track behavior clusters, and improves public digital literacy.`,
     professionalContribution: `This case demonstrates capabilities in real-time threat analysis, digital forensics and device fingerprinting, incident response documentation, and engaging legal systems with structured evidence.`,
-    conclusion: `This was a successfully intercepted threat backed by real-time forensics, counterintelligence, and responsible reporting. The investigation prevented financial loss and collected actionable intelligence for law enforcement.`,
-    appendices: [
-      'WhatsApp & Instagram chat screenshots',
-      'UPI ID screenshots and metadata logs',
-      'Device fingerprinting data'
-    ]
+    conclusion: `This was a successfully intercepted threat backed by real-time forensics, counterintelligence, and responsible reporting. The investigation prevented financial loss and collected actionable intelligence for law enforcement.`
   },
   {
     id: 'idor-ambedkar-overseas-vidya-nidhi-2023',
@@ -249,11 +244,6 @@ This represents a critical failure in protecting citizen data, particularly give
     professionalContribution: `This case demonstrates capabilities in vulnerability discovery, API security testing, responsible disclosure practices, impact assessment, and technical documentation. Despite the initial dismissal, this demonstrates persistence in responsible security research and commitment to protecting citizen data privacy.`,
     conclusion: `The IDOR vulnerability represents a critical authorization failure that exposed sensitive personal information of approximately 2,000 scholarship applicants. The vulnerability was exploitable through simple parameter manipulation, making it accessible to attackers with minimal technical knowledge.
 
-This highlights the importance of proper authorization controls in government systems handling sensitive citizen data. The discovery and responsible disclosure process demonstrates the value of independent security research in protecting public digital infrastructure.`,
-    appendices: [
-      'Burp Suite request/response logs',
-      'Responsible disclosure correspondence',
-      'Impact assessment documentation'
-    ]
+This highlights the importance of proper authorization controls in government systems handling sensitive citizen data. The discovery and responsible disclosure process demonstrates the value of independent security research in protecting public digital infrastructure.`
   }
 ];
