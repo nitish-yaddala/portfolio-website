@@ -11,6 +11,31 @@ export default function CaseStudies() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
+  // Debug: Log case studies data
+  if (typeof window !== 'undefined') {
+    console.log('CaseStudies component loaded, caseStudies count:', caseStudies?.length || 0)
+  }
+
+  // Ensure caseStudies is available and is an array
+  if (!caseStudies || !Array.isArray(caseStudies) || caseStudies.length === 0) {
+    return (
+      <section id="case-studies" className="py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <h2 className="section-heading text-4xl sm:text-5xl lg:text-6xl font-mono mb-6">
+              <span className="text-hacker-green">{'>'}</span>{' '}
+              <span className="text-white">Technical Case Studies</span>
+            </h2>
+            <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-hacker-green/60 to-transparent mx-auto"></div>
+          </div>
+          <div className="text-center py-16">
+            <p className="text-gray-400 font-mono text-lg">No case studies available</p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   // Get unique categories
   const categories = Array.from(new Set(caseStudies.map(cs => cs.category)))
 
