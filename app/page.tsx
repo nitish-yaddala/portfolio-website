@@ -17,7 +17,6 @@ import SectionJumpMenu from '@/components/SectionJumpMenu'
 import SecurityResources from '@/components/SecurityResources'
 import PerformanceMetrics from '@/components/PerformanceMetrics'
 import RecentActivity from '@/components/RecentActivity'
-import SocialProof from '@/components/SocialProofWithSkeleton'
 import SecurityAdvisories from '@/components/SecurityAdvisories'
 import CaseStudies from '@/components/CaseStudies'
 import ScrollProgress from '@/components/ScrollProgress'
@@ -48,7 +47,6 @@ export default function Home() {
       <Certifications />
       <SecurityResources />
       <RecentActivity />
-      <SocialProof />
       <SecurityQuiz />
       <Contact />
       <PerformanceMetrics />
