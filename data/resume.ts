@@ -432,14 +432,16 @@ export const resumeData: ResumeData = {
       role: "Senior Security Engineer",
       company: "Previous Company",
       text: "Nitish demonstrates exceptional technical depth in application security and penetration testing. His systematic approach to vulnerability discovery and responsible disclosure practices set a high standard for security research.",
-      linkedin: "#"
+      linkedin: "#",
+      avatar: undefined // Add image URL here if available: "/testimonials/colleague.jpg"
     },
     {
       name: "Team Lead",
       role: "Security Team Lead",
       company: "Organization",
       text: "Working with Nitish has been a great experience. His ability to identify complex security vulnerabilities and communicate findings clearly to both technical and non-technical stakeholders is outstanding.",
-      linkedin: "#"
+      linkedin: "#",
+      avatar: undefined // Add image URL here if available: "/testimonials/team-lead.jpg"
     }
   ]
 };

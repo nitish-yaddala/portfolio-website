@@ -1,8 +1,9 @@
 import { resumeData } from '@/data/resume'
 import { siteConfig } from '@/config/site'
+import { caseStudies } from '@/data/caseStudies'
 
 export default function StructuredData() {
-  const structuredData = {
+  const personData = {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": resumeData.personal.name,
@@ -42,10 +43,48 @@ export default function StructuredData() {
     "description": resumeData.personal.summary.join(' ')
   }
 
+  const websiteData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": `${resumeData.personal.name} - Portfolio`,
+    "url": siteConfig.url,
+    "author": {
+      "@type": "Person",
+      "name": resumeData.personal.name
+    },
+    "description": resumeData.personal.summary.join(' ')
+  }
+
+  const caseStudyData = caseStudies.map(study => ({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": study.title,
+    "author": {
+      "@type": "Person",
+      "name": study.author
+    },
+    "datePublished": study.reportDate,
+    "description": study.summary,
+    "articleSection": study.category
+  }))
+
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteData) }}
+      />
+      {caseStudyData.map((data, idx) => (
+        <script
+          key={idx}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+        />
+      ))}
+    </>
   )
 }

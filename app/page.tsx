@@ -23,6 +23,8 @@ import CaseStudies from '@/components/CaseStudies'
 import ScrollProgress from '@/components/ScrollProgress'
 import Testimonials from '@/components/Testimonials'
 import GitHubActivity from '@/components/GitHubActivity'
+import SecurityQuiz from '@/components/SecurityQuiz'
+import BlogPreview from '@/components/BlogPreview'
 
 export default function Home() {
   return (
@@ -35,6 +37,7 @@ export default function Home() {
       <Skills />
       <Projects />
       <CaseStudies />
+      <BlogPreview />
       <Workflow />
       <Research />
       <Achievements />
@@ -46,6 +49,7 @@ export default function Home() {
       <SecurityResources />
       <RecentActivity />
       <SocialProof />
+      <SecurityQuiz />
       <Contact />
       <PerformanceMetrics />
       <BackToTop />

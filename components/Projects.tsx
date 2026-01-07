@@ -135,9 +135,14 @@ export default function Projects() {
         {/* Projects Grid */}
         {filteredProjects.length > 0 ? (
           <div className="grid md:grid-cols-2 gap-6 md:gap-10">
-            {filteredProjects.map((project, idx) => (
+            {filteredProjects.map((project, idx) => {
+              const projectSlug = project.name.toLowerCase().replace(/\s+/g, '-')
+              return (
               <ScrollAnimation key={idx} delay={idx * 100}>
-                <div className="terminal-window rounded-lg p-4 sm:p-6 md:p-8 card-hover group relative h-full flex flex-col overflow-hidden">
+                <a
+                  href={`/projects/${projectSlug}`}
+                  className="block terminal-window rounded-lg p-4 sm:p-6 md:p-8 card-hover group relative h-full flex flex-col overflow-hidden"
+                >
                   <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 sm:mb-6 gap-3 sm:gap-4 flex-shrink-0">
                     <h3 className="text-xl sm:text-2xl font-bold text-white font-mono group-hover:text-hacker-green transition-colors flex-1 min-w-0 break-words">
                       {project.name}
@@ -205,9 +210,10 @@ def analyze_response(response) -> List[str]:
                       ))}
                     </div>
                   </div>
-                </div>
+                </a>
               </ScrollAnimation>
-            ))}
+              )
+            })}
           </div>
         ) : (
           <div className="text-center py-16">

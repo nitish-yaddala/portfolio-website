@@ -13,11 +13,13 @@ const navItems = [
   { id: 'skills', label: 'Skills' },
   { id: 'projects', label: 'Projects' },
   { id: 'case-studies', label: 'Case Studies' },
+  { id: 'blog', label: 'Blog' },
   { id: 'workflow', label: 'Workflow' },
   { id: 'research', label: 'Research' },
   { id: 'achievements', label: 'Achievements' },
   { id: 'testimonials', label: 'Testimonials' },
   { id: 'github-activity', label: 'GitHub' },
+  { id: 'security-quiz', label: 'Quiz' },
   { id: 'security-advisories', label: 'Advisories' },
   { id: 'education', label: 'Education' },
   { id: 'certifications', label: 'Certifications' },
@@ -161,6 +163,13 @@ export default function Navigation() {
   }, [calculateVisibleItems])
 
   const scrollToSection = (id: string) => {
+    // Handle blog route separately
+    if (id === 'blog') {
+      window.location.href = '/blog'
+      setIsMobileMenuOpen(false)
+      return
+    }
+    
     const element = document.getElementById(id)
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' })
