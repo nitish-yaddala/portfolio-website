@@ -100,7 +100,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased`}>
         <PageLoadingBar />
         <ToastProvider>
-          <ThemeProvider>
+        <ThemeProvider>
           <StructuredData />
           <KeyboardShortcuts />
           <Analytics />
@@ -133,10 +133,10 @@ export default function RootLayout({
               {children}
             </main>
           </div>
-                </ErrorBoundaryWrapper>
-              </ThemeProvider>
+        </ErrorBoundaryWrapper>
+        </ThemeProvider>
             </ToastProvider>
-          </body>
+      </body>
     </html>
   )
 }
