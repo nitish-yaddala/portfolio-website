@@ -54,18 +54,12 @@ export const caseStudies: CaseStudy[] = [
     category: 'Social Engineering',
     tags: ['Social Engineering', 'Digital Forensics', 'Threat Intelligence', 'Incident Response', 'Cybercrime Investigation'],
     summary: 'A real-world scam interception where a scammer impersonated a family member via Instagram and WhatsApp, attempting to solicit fraudulent UPI payments. Using real-time forensic methods, I collected evidence including IP address, device metadata, and fraudulent account details, then filed a formal cybercrime complaint.',
-    executiveSummary: `This case study documents a real-world scam interception that I handled as a cybersecurity professional. A scammer impersonated a family member via Instagram and WhatsApp, attempting to solicit fraudulent UPI payments. Using real-time forensic methods, I collected evidence including IP address, device metadata, and fraudulent account details. I then filed a formal cybercrime complaint to help prevent the victimization of others.
+    executiveSummary: `This case study documents a real-world scam interception where a scammer impersonated a family member via Instagram and WhatsApp, attempting to solicit fraudulent UPI payments. Using forensic methods, I collected evidence including IP address, device metadata, and fraudulent account details, then filed a formal cybercrime complaint.
 
-Importantly, this report demonstrates how I apply cybersecurity knowledge outside the boundaries of employment, in support of public digital safety. My investigation relied on tools and skills commonly used in penetration testing, social engineering defense, and network forensics, all of which are part of my professional expertise and academic background.
+The investigation used tools and techniques from penetration testing, social engineering defense, and network forensics. The tactics employed (mobile spoofing, WhatsApp impersonation, cross-platform social engineering) represent common attack surfaces in digital fraud. This demonstrates my ability to detect and neutralize threats and engage law enforcement with actionable, evidence-backed reports.`,
+    introduction: `This report documents a social engineering scam that utilized cloned digital identities to commit attempted financial fraud. The incident involved abuse of communication platforms (Instagram and WhatsApp) to impersonate a trusted relative and initiate fraudulent UPI-based payment requests.
 
-The tools I used, such as metadata loggers, phishing countermeasures, and behavioral threat modeling, are part of a broader strategy used in both private and government sectors to counter fraud and protect national digital infrastructure.
-
-Though the incident occurred within the Indian digital payment ecosystem, the tactics and infrastructure used (mobile spoofing, WhatsApp impersonation, cross-platform social engineering) are the same attack surfaces targeted in U.S. systems. This example demonstrates my ability to detect and neutralize such threats and to engage law enforcement with actionable, evidence-backed reports.`,
-    introduction: `This report documents a real-world incident involving a targeted social engineering scam that utilized cloned digital identities to commit attempted financial fraud. The incident showcases the abuse of widely accessible communication platforms (Instagram and WhatsApp) to impersonate a trusted relative and initiate fraudulent UPI-based payment requests.
-
-The case reflects the growing sophistication and frequency of personalized digital fraud in India and underscores the need for broader awareness, real-time detection strategies, and technical intervention, all of which were applied by me in this incident. As a cybersecurity engineer, I engaged with the scammer using safe investigative methods to prevent loss and collect actionable intelligence.
-
-This report was originally prepared as part of a formal complaint submitted to Indian cybercrime authorities. It also serves as a documented example of applied cybersecurity expertise in real-world threat response, included here to demonstrate my ongoing contributions to the field as part of my EB2-NIW petition.`,
+As a cybersecurity engineer, I engaged with the scammer using safe investigative methods to prevent loss and collect actionable intelligence. This report was prepared as part of a formal complaint submitted to Indian cybercrime authorities.`,
     timeline: [
       {
         date: 'May 1, 2025',
@@ -148,19 +142,11 @@ I used a combination of psychological probing and technical deception to gather 
       'Section 419, IPC – Impersonation',
       'Section 420, IPC – Cheating and Dishonest Inducement'
     ],
-    societalImpact: `While this was a single scam attempt, it reflects a larger pattern of abuse within the Indian digital payments ecosystem. Many individuals, especially senior citizens or those unfamiliar with tech, may not recognize these threats early.
+    societalImpact: `This scam attempt reflects a larger pattern of abuse within the Indian digital payments ecosystem. Many individuals, especially senior citizens or those unfamiliar with technology, may not recognize these threats early.
 
-This kind of technical vigilance and documentation helps:
-- Prevent wider victimization
-- Enable cybercrime units to track behavior clusters
-- Improve public digital literacy through example-based education`,
-    professionalContribution: `This case underscores my strength in:
-- Real-time threat analysis
-- Digital forensics and device fingerprinting
-- Incident response documentation
-- Technical writing for non-expert audiences
-- Engaging legal systems with structured evidence`,
-    conclusion: `This was a prevented scam, but more importantly, a successfully intercepted threat backed by real-time forensics, counterintelligence, and responsible reporting. It reflects my personal ethos of cyber integrity and supports my contributions as a cybersecurity engineer aligned with public interest and national digital protection.`,
+Technical vigilance and documentation helps prevent wider victimization, enable cybercrime units to track behavior clusters, and improve public digital literacy.`,
+    professionalContribution: `This case demonstrates capabilities in real-time threat analysis, digital forensics and device fingerprinting, incident response documentation, and engaging legal systems with structured evidence.`,
+    conclusion: `This was a successfully intercepted threat backed by real-time forensics, counterintelligence, and responsible reporting. The investigation prevented financial loss and collected actionable intelligence for law enforcement.`,
     appendices: [
       'Screenshots of WhatsApp & Instagram chats',
       'QR codes / UPI ID screenshots',
@@ -181,14 +167,10 @@ This kind of technical vigilance and documentation helps:
     summary: 'Identified and responsibly disclosed a critical Insecure Direct Object Reference (IDOR) vulnerability in the Andhra Pradesh government scholarship portal that exposed sensitive personal information of approximately 2,000 students, including Aadhaar numbers, passport details, financial information, and uploaded documents.',
     executiveSummary: `This case study documents the discovery and responsible disclosure of a critical Insecure Direct Object Reference (IDOR) vulnerability in the Ambedkar Overseas Vidya Nidhi Portal, a government-operated web application managed by the Andhra Pradesh Centre for Financial Systems and Services (APCFSS). The vulnerability allowed unauthorized access to sensitive personal information of approximately 2,000 scholarship applicants through predictable API parameters.
 
-The vulnerability was identified during routine security assessment in April 2023. Multiple authenticated API endpoints were found to lack proper authorization checks, allowing any authenticated user to access other users' data by simply modifying URL parameters. This represents a fundamental failure in access control mechanisms and demonstrates the critical importance of proper authorization validation in government systems handling sensitive citizen data.
-
-The exposed information included highly sensitive data such as Aadhaar numbers, passport details, visa information, family income details, bank account information, residential addresses, and uploaded identity documents. This case study demonstrates my ability to identify critical security flaws in production government systems and follow responsible disclosure practices, even when initial reporting attempts were not properly escalated.`,
+The vulnerability was identified during routine security assessment in April 2023. Multiple authenticated API endpoints lacked proper authorization checks, allowing any authenticated user to access other users' data by modifying URL parameters. The exposed information included Aadhaar numbers, passport details, visa information, family income details, bank account information, residential addresses, and uploaded identity documents.`,
     introduction: `The Ambedkar Overseas Vidya Nidhi Portal (https://jnboverseas1.apcfss.in/) is a government-operated web application developed by the Andhra Pradesh Centre for Financial Systems and Services (APCFSS). The portal enables economically disadvantaged students from Andhra Pradesh to apply for and manage overseas education scholarships, specifically targeting students admitted to top 200 world-ranked universities.
 
-The portal serves a limited user base of Andhra Pradesh state residents, with eligibility typically based on economic background. Given its role in handling sensitive student data and financial information, the portal requires robust security controls to protect applicant privacy and prevent unauthorized data access.
-
-This case study documents the discovery of a critical authorization vulnerability that exposed sensitive personal information of scholarship applicants, the methodology used to identify and validate the issue, the impact assessment, and the responsible disclosure process.`,
+The portal serves Andhra Pradesh state residents, with eligibility based on economic background. This case study documents the discovery of a critical authorization vulnerability that exposed sensitive personal information of scholarship applicants, the methodology used to identify and validate the issue, the impact assessment, and the responsible disclosure process.`,
     timeline: [
       {
         date: 'April 2023',
@@ -218,15 +200,15 @@ The vulnerability manifested across multiple API endpoints that lacked proper au
 No intrusive testing or unauthorized access was performed - only passive exploration of authenticated sessions. The vulnerability was exploitable through standard browser functionality and required no special tools beyond what any security researcher would use for legitimate assessment purposes.`,
     detectionStrategy: `The vulnerability was identified during a routine interaction with the website. The discovery methodology involved:
 
-1. **Passive Observation**: While using the portal normally, I noticed that API endpoints used predictable parameters (Aadhaar numbers and sequential applicant IDs) in URL parameters.
+1. Passive Observation: While using the portal normally, I noticed that API endpoints used predictable parameters (Aadhaar numbers and sequential applicant IDs) in URL parameters.
 
-2. **Network Traffic Analysis**: Used browser developer tools to inspect network activity and identify all API endpoints being called during normal portal usage.
+2. Network Traffic Analysis: Used browser developer tools to inspect network activity and identify all API endpoints being called during normal portal usage.
 
-3. **Request Interception**: Used Burp Suite to intercept and modify HTTP requests, testing whether changing the aadhar or applicantId parameters would return unauthorized data.
+3. Request Interception: Used Burp Suite to intercept and modify HTTP requests, testing whether changing the aadhar or applicantId parameters would return unauthorized data.
 
-4. **Validation**: Confirmed that modifying these parameters in authenticated requests successfully returned sensitive information belonging to other users, confirming the IDOR vulnerability.
+4. Validation: Confirmed that modifying these parameters in authenticated requests successfully returned sensitive information belonging to other users, confirming the IDOR vulnerability.
 
-5. **Scope Assessment**: Identified all affected endpoints and documented the full extent of data exposure.
+5. Scope Assessment: Identified all affected endpoints and documented the full extent of data exposure.
 
 The testing was conducted entirely within authenticated sessions and involved no unauthorized access or intrusive techniques.`,
     toolsAndTechniques: [
@@ -281,21 +263,10 @@ The sequential nature of applicant IDs made it possible for an attacker to syste
 - Violation of data protection regulations
 
 This vulnerability represents a critical failure in protecting citizen data in government systems, particularly given the sensitive nature of the information and the vulnerable population (economically disadvantaged students) being served.`,
-    professionalContribution: `This case study demonstrates my capabilities in:
+    professionalContribution: `This case study demonstrates capabilities in vulnerability discovery, API security testing, responsible disclosure practices, impact assessment, and technical documentation. Despite the initial dismissal of the report, this demonstrates persistence in responsible security research and commitment to protecting citizen data privacy.`,
+    conclusion: `The IDOR vulnerability in the Ambedkar Overseas Vidya Nidhi Portal represents a critical authorization failure that exposed sensitive personal information of approximately 2,000 scholarship applicants. The vulnerability was exploitable through simple parameter manipulation, making it accessible to attackers with minimal technical knowledge.
 
-- **Vulnerability Discovery**: Identifying critical authorization flaws in production government systems through systematic security assessment
-- **API Security Testing**: Analyzing API endpoints for authorization bypass vulnerabilities
-- **Responsible Disclosure**: Following ethical security research practices and attempting proper disclosure channels
-- **Impact Assessment**: Comprehensively documenting the scope and severity of data exposure
-- **Technical Documentation**: Creating detailed vulnerability reports with reproduction steps and impact analysis
-- **Government System Security**: Understanding security requirements for systems handling sensitive citizen data
-
-Despite the initial dismissal of the report, this case study demonstrates persistence in responsible security research and commitment to protecting citizen data privacy, even when proper channels are not immediately responsive.`,
-    conclusion: `The IDOR vulnerability in the Ambedkar Overseas Vidya Nidhi Portal represents a critical authorization failure that exposed sensitive personal information of approximately 2,000 scholarship applicants. The vulnerability was exploitable through simple parameter manipulation and required no advanced techniques, making it accessible to attackers with minimal technical knowledge.
-
-This case study highlights the importance of proper authorization controls in government systems handling sensitive citizen data, particularly those serving vulnerable populations. The discovery and responsible disclosure process, despite not receiving immediate acknowledgment, demonstrates the value of independent security research in protecting public digital infrastructure.
-
-The vulnerability remains a concern for affected users and underscores the need for regular security assessments, proper access control implementation, and responsive vulnerability management processes in government systems.`,
+This case study highlights the importance of proper authorization controls in government systems handling sensitive citizen data. The discovery and responsible disclosure process demonstrates the value of independent security research in protecting public digital infrastructure.`,
     appendices: [
       'Portal login page screenshot',
       'Account registration form data (obfuscated)',
