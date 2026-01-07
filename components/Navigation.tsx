@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
 import { resumeData } from '@/data/resume'
@@ -28,6 +28,14 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isMoreMenuOpen, setIsMoreMenuOpen] = useState(false)
   const [avatarError, setAvatarError] = useState(false)
+  const [visibleItemsCount, setVisibleItemsCount] = useState(navItems.length)
+  const [visibleItemsCountMd, setVisibleItemsCountMd] = useState(navItems.length)
+  const navContainerRef = useRef<HTMLDivElement>(null)
+  const navContainerMdRef = useRef<HTMLDivElement>(null)
+  const navItemsRef = useRef<(HTMLButtonElement | null)[]>([])
+  const navItemsMdRef = useRef<(HTMLButtonElement | null)[]>([])
+  const moreButtonRef = useRef<HTMLButtonElement>(null)
+  const moreButtonMdRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,6 +67,96 @@ export default function Navigation() {
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [isMobileMenuOpen])
+
+  // Calculate how many items can fit for desktop (lg+)
+  const calculateVisibleItems = useCallback(() => {
+    if (typeof window === 'undefined') return
+
+    // Desktop (lg breakpoint and above)
+    if (window.innerWidth >= 1024 && navContainerRef.current) {
+      const container = navContainerRef.current
+      const containerWidth = container.offsetWidth
+      const moreButtonWidth = moreButtonRef.current?.offsetWidth || 60
+      const gap = 8
+      let availableWidth = containerWidth - moreButtonWidth - gap
+
+      let totalWidth = 0
+      let count = 0
+
+      for (let i = 0; i < navItems.length; i++) {
+        const item = navItemsRef.current[i]
+        if (!item) break
+
+        const itemWidth = item.offsetWidth
+        const neededWidth = totalWidth + itemWidth + (count > 0 ? gap : 0)
+
+        if (neededWidth <= availableWidth) {
+          totalWidth = neededWidth
+          count++
+        } else {
+          break
+        }
+      }
+
+      setVisibleItemsCount(count === navItems.length ? navItems.length : count)
+    }
+
+    // Medium screen (md to lg)
+    if (window.innerWidth >= 768 && window.innerWidth < 1024 && navContainerMdRef.current) {
+      const container = navContainerMdRef.current
+      const containerWidth = container.offsetWidth
+      const moreButtonWidth = moreButtonMdRef.current?.offsetWidth || 60
+      const gap = 8
+      let availableWidth = containerWidth - moreButtonWidth - gap
+
+      let totalWidth = 0
+      let count = 0
+
+      for (let i = 0; i < navItems.length; i++) {
+        const item = navItemsMdRef.current[i]
+        if (!item) break
+
+        const itemWidth = item.offsetWidth
+        const neededWidth = totalWidth + itemWidth + (count > 0 ? gap : 0)
+
+        if (neededWidth <= availableWidth) {
+          totalWidth = neededWidth
+          count++
+        } else {
+          break
+        }
+      }
+
+      setVisibleItemsCountMd(count === navItems.length ? navItems.length : count)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    // Initial calculation after render
+    const calculate = () => {
+      requestAnimationFrame(() => {
+        calculateVisibleItems()
+      })
+    }
+
+    const timeoutId = setTimeout(calculate, 200)
+
+    // Recalculate on resize with debounce
+    let resizeTimeout: NodeJS.Timeout
+    const handleResize = () => {
+      clearTimeout(resizeTimeout)
+      resizeTimeout = setTimeout(calculate, 150)
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      clearTimeout(timeoutId)
+      clearTimeout(resizeTimeout)
+    }
+  }, [calculateVisibleItems])
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
@@ -111,12 +209,18 @@ export default function Navigation() {
             <span className="whitespace-nowrap">{'>'} nitish_yaddala</span>
           </button>
 
-          {/* Desktop navigation: Show items with overflow handling */}
-          <div className="hidden lg:flex items-center flex-1 min-w-0 ml-4 max-w-none">
+          {/* Desktop navigation: Adaptive overflow handling */}
+          <div 
+            ref={navContainerRef}
+            className="hidden lg:flex items-center flex-1 min-w-0 ml-4 max-w-none"
+          >
             <div className="flex items-center gap-2 xl:gap-3 2xl:gap-4 flex-1 justify-start" style={{ overflow: 'visible' }}>
-              {navItems.slice(0, 7).map((item) => (
+              {navItems.slice(0, visibleItemsCount).map((item, index) => (
                 <button
                   key={item.id}
+                  ref={(el) => {
+                    navItemsRef.current[index] = el
+                  }}
                   onClick={() => scrollToSection(item.id)}
                   className={`font-mono text-xs transition-all relative py-2 pb-3 focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg rounded px-1.5 whitespace-nowrap flex-shrink-0 ${
                     activeSection === item.id
@@ -133,10 +237,11 @@ export default function Navigation() {
                 </button>
               ))}
             </div>
-            {/* More dropdown for remaining items */}
-            {navItems.length > 7 && (
+            {/* More dropdown - only show if there are items that don't fit */}
+            {visibleItemsCount < navItems.length && (
               <div className="relative ml-2 flex-shrink-0">
                 <button
+                  ref={moreButtonRef}
                   onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
                   onBlur={() => setTimeout(() => setIsMoreMenuOpen(false), 200)}
                   className="font-mono text-xs text-gray-400 hover:text-hacker-green transition-all py-2 px-1.5 rounded focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg whitespace-nowrap"
@@ -148,7 +253,7 @@ export default function Navigation() {
                 {isMoreMenuOpen && (
                   <div className="absolute right-0 mt-2 w-48 bg-terminal-bg/95 backdrop-blur-xl border border-hacker-green/30 rounded-lg shadow-lg z-50">
                     <div className="py-2">
-                      {navItems.slice(7).map((item) => (
+                      {navItems.slice(visibleItemsCount).map((item) => (
                         <button
                           key={item.id}
                           onClick={() => {
@@ -172,12 +277,18 @@ export default function Navigation() {
             )}
           </div>
           
-          {/* Medium screen: Show fewer items with dropdown */}
-          <div className="hidden md:flex lg:hidden items-center space-x-3 flex-1 min-w-0 ml-4">
+          {/* Medium screen: Adaptive overflow handling */}
+          <div 
+            ref={navContainerMdRef}
+            className="hidden md:flex lg:hidden items-center space-x-3 flex-1 min-w-0 ml-4"
+          >
             <div className="flex items-center space-x-2" style={{ overflow: 'visible' }}>
-              {navItems.slice(0, 4).map((item) => (
+              {navItems.slice(0, visibleItemsCountMd).map((item, index) => (
                 <button
                   key={item.id}
+                  ref={(el) => {
+                    navItemsMdRef.current[index] = el
+                  }}
                   onClick={() => scrollToSection(item.id)}
                   className={`font-mono text-xs transition-all relative py-2 pb-3 focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg rounded px-1.5 whitespace-nowrap flex-shrink-0 ${
                     activeSection === item.id
@@ -194,40 +305,44 @@ export default function Navigation() {
                 </button>
               ))}
             </div>
-            <div className="relative flex-shrink-0 ml-2">
-              <button
-                onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
-                onBlur={() => setTimeout(() => setIsMoreMenuOpen(false), 200)}
-                className="font-mono text-xs text-gray-400 hover:text-hacker-green transition-all py-2 px-1.5 rounded focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg whitespace-nowrap"
-                aria-label="Show more navigation items"
-                aria-expanded={isMoreMenuOpen}
-              >
-                More...
-              </button>
-              {isMoreMenuOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-terminal-bg/95 backdrop-blur-xl border border-hacker-green/30 rounded-lg shadow-lg z-50">
-                  <div className="py-2">
-                    {navItems.slice(4).map((item) => (
-                      <button
-                        key={item.id}
-                        onClick={() => {
-                          scrollToSection(item.id)
-                          setIsMoreMenuOpen(false)
-                        }}
-                        className={`block w-full text-left px-4 py-2 font-mono text-xs transition-all focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-inset ${
-                          activeSection === item.id
-                            ? 'text-hacker-green bg-hacker-green/10 border-l-2 border-hacker-green'
-                            : 'text-gray-400 hover:text-hacker-green hover:bg-hacker-green/5'
-                        }`}
-                        aria-label={`Navigate to ${item.label} section`}
-                      >
-                        {item.label}
-                      </button>
-                    ))}
+            {/* More dropdown - only show if there are items that don't fit */}
+            {visibleItemsCountMd < navItems.length && (
+              <div className="relative flex-shrink-0 ml-2">
+                <button
+                  ref={moreButtonMdRef}
+                  onClick={() => setIsMoreMenuOpen(!isMoreMenuOpen)}
+                  onBlur={() => setTimeout(() => setIsMoreMenuOpen(false), 200)}
+                  className="font-mono text-xs text-gray-400 hover:text-hacker-green transition-all py-2 px-1.5 rounded focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-offset-2 focus:ring-offset-terminal-bg whitespace-nowrap"
+                  aria-label="Show more navigation items"
+                  aria-expanded={isMoreMenuOpen}
+                >
+                  More...
+                </button>
+                {isMoreMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-terminal-bg/95 backdrop-blur-xl border border-hacker-green/30 rounded-lg shadow-lg z-50">
+                    <div className="py-2">
+                      {navItems.slice(visibleItemsCountMd).map((item) => (
+                        <button
+                          key={item.id}
+                          onClick={() => {
+                            scrollToSection(item.id)
+                            setIsMoreMenuOpen(false)
+                          }}
+                          className={`block w-full text-left px-4 py-2 font-mono text-xs transition-all focus:outline-none focus:ring-2 focus:ring-hacker-green/50 focus:ring-inset ${
+                            activeSection === item.id
+                              ? 'text-hacker-green bg-hacker-green/10 border-l-2 border-hacker-green'
+                              : 'text-gray-400 hover:text-hacker-green hover:bg-hacker-green/5'
+                          }`}
+                          aria-label={`Navigate to ${item.label} section`}
+                        >
+                          {item.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            )}
           </div>
 
           <div className="flex items-center space-x-2 flex-shrink-0">
