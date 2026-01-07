@@ -19,6 +19,7 @@ import PerformanceMetrics from '@/components/PerformanceMetrics'
 import RecentActivity from '@/components/RecentActivity'
 import SocialProof from '@/components/SocialProofWithSkeleton'
 import SecurityAdvisories from '@/components/SecurityAdvisories'
+import CaseStudies from '@/components/CaseStudies'
 import ScrollProgress from '@/components/ScrollProgress'
 
 export default function Home() {
@@ -31,6 +32,7 @@ export default function Home() {
       <Experience />
       <Skills />
       <Projects />
+      <CaseStudies />
       <Workflow />
       <Research />
       <Achievements />
