@@ -44,6 +44,34 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     return Math.ceil(wordCount / wordsPerMinute)
   }
 
+  // Helper function to process markdown bold syntax
+  const processMarkdown = (text: string) => {
+    const parts: (string | JSX.Element)[] = []
+    let remaining = text
+    let key = 0
+
+    while (remaining.length > 0) {
+      const boldMatch = remaining.match(/\*\*(.+?)\*\*/)
+      if (boldMatch) {
+        const beforeBold = remaining.substring(0, boldMatch.index)
+        if (beforeBold) {
+          parts.push(beforeBold)
+        }
+        parts.push(
+          <strong key={`bold-${key++}`} className="text-white font-semibold">
+            {boldMatch[1]}
+          </strong>
+        )
+        remaining = remaining.substring((boldMatch.index || 0) + boldMatch[0].length)
+      } else {
+        parts.push(remaining)
+        break
+      }
+    }
+
+    return parts.length === 1 && typeof parts[0] === 'string' ? parts[0] : <>{parts}</>
+  }
+
   const formatContent = (content: string) => {
     const lines = content.split('\n')
     const elements: JSX.Element[] = []
@@ -51,7 +79,9 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     let inCodeBlock = false
     let codeBlockContent: string[] = []
     let listItems: string[] = []
+    let numberedListItems: Array<{ num: number; text: string }> = []
     let listKey = 0
+    let isNumberedList = false
 
     const flushParagraph = () => {
       if (currentParagraph.length > 0) {
@@ -59,7 +89,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         if (text) {
           elements.push(
             <p key={`p-${elements.length}`} className="mb-4 text-gray-200 leading-relaxed">
-              {text}
+              {processMarkdown(text)}
             </p>
           )
         }
@@ -73,12 +103,25 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           <ul key={`list-${listKey++}`} className="space-y-2 mb-4 ml-6 list-disc">
             {listItems.map((item, idx) => (
               <li key={idx} className="text-gray-200">
-                {item}
+                {processMarkdown(item)}
               </li>
             ))}
           </ul>
         )
         listItems = []
+      }
+      if (numberedListItems.length > 0) {
+        elements.push(
+          <ol key={`numbered-${listKey++}`} className="space-y-2 mb-4 ml-6 list-decimal">
+            {numberedListItems.map((item, idx) => (
+              <li key={idx} className="text-gray-200">
+                {processMarkdown(item.text)}
+              </li>
+            ))}
+          </ol>
+        )
+        numberedListItems = []
+        isNumberedList = false
       }
     }
 
@@ -116,7 +159,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         flushList()
         elements.push(
           <h3 key={`h3-${listKey++}`} className="text-xl font-bold text-white font-mono mb-3 mt-6">
-            {line.substring(4)}
+            {processMarkdown(line.substring(4))}
           </h3>
         )
         continue
@@ -127,7 +170,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         flushList()
         elements.push(
           <h2 key={`h2-${listKey++}`} className="text-2xl font-bold text-white font-mono mb-4 mt-8">
-            {line.substring(3)}
+            {processMarkdown(line.substring(3))}
           </h2>
         )
         continue
@@ -138,24 +181,35 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         flushList()
         elements.push(
           <h1 key={`h1-${listKey++}`} className="text-3xl font-bold text-white font-mono mb-6 mt-8">
-            {line.substring(2)}
+            {processMarkdown(line.substring(2))}
           </h1>
         )
         continue
       }
 
-      // List items
-      if (line.startsWith('- ') || line.startsWith('* ')) {
+      // Numbered list (check first to avoid conflicts)
+      const numberedMatch = line.match(/^(\d+)\.\s+(.+)$/)
+      if (numberedMatch) {
         flushParagraph()
-        listItems.push(line.substring(2))
+        if (!isNumberedList && listItems.length > 0) {
+          flushList()
+        }
+        isNumberedList = true
+        numberedListItems.push({
+          num: parseInt(numberedMatch[1]),
+          text: numberedMatch[2]
+        })
         continue
       }
 
-      // Numbered list
-      const numberedMatch = line.match(/^\d+\.\s+(.+)$/)
-      if (numberedMatch) {
+      // Bullet list items
+      if (line.startsWith('- ') || line.startsWith('* ')) {
         flushParagraph()
-        listItems.push(numberedMatch[1])
+        if (isNumberedList && numberedListItems.length > 0) {
+          flushList()
+        }
+        isNumberedList = false
+        listItems.push(line.substring(2))
         continue
       }
 
