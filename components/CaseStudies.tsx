@@ -12,12 +12,13 @@ export default function CaseStudies() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
   // Debug: Log case studies data
-  if (typeof window !== 'undefined') {
-    console.log('CaseStudies component loaded, caseStudies count:', caseStudies?.length || 0)
-  }
+  console.log('CaseStudies component rendering, caseStudies:', caseStudies)
+  console.log('CaseStudies count:', caseStudies?.length || 0)
+  console.log('Is array?', Array.isArray(caseStudies))
 
   // Ensure caseStudies is available and is an array
   if (!caseStudies || !Array.isArray(caseStudies) || caseStudies.length === 0) {
+    console.warn('CaseStudies: No case studies available or empty array')
     return (
       <section id="case-studies" className="py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
@@ -68,7 +69,7 @@ export default function CaseStudies() {
   }
 
   return (
-    <section id="case-studies" className="py-24 px-4 sm:px-6 lg:px-8">
+    <section id="case-studies" className="py-24 px-4 sm:px-6 lg:px-8" style={{ minHeight: '200px', backgroundColor: 'transparent' }}>
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20">
           <h2 className="section-heading text-4xl sm:text-5xl lg:text-6xl font-mono mb-6">
