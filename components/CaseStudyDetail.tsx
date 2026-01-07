@@ -52,24 +52,28 @@ function formatTextWithLists(text: string) {
   const flushNumberedList = () => {
     if (currentNumberedList.length > 0) {
       elements.push(
-        <ol key={`numbered-${listKey++}`} className="space-y-3 mb-4 ml-6 list-decimal">
+        <div key={`numbered-${listKey++}`} className="space-y-3 mb-4">
           {currentNumberedList.map((item, idx) => {
             const parts = item.text.split(':')
             const hasHeading = parts.length > 1 && parts[0].length < 50
+            const itemNumber = parseInt(item.num) || (idx + 1)
             return (
-              <li key={idx} className="text-gray-200 pl-2">
-                {hasHeading ? (
-                  <>
-                    <strong className="text-white font-semibold">{parts[0].trim()}:</strong>
-                    <span className="ml-2">{parts.slice(1).join(':').trim()}</span>
-                  </>
-                ) : (
-                  item.text.trim()
-                )}
-              </li>
+              <div key={idx} className="flex items-start gap-3">
+                <span className="text-hacker-green font-mono mt-1 flex-shrink-0">{itemNumber}.</span>
+                <span className="text-gray-200 flex-1">
+                  {hasHeading ? (
+                    <>
+                      <strong className="text-white font-semibold">{parts[0].trim()}:</strong>
+                      <span className="ml-2">{parts.slice(1).join(':').trim()}</span>
+                    </>
+                  ) : (
+                    item.text.trim()
+                  )}
+                </span>
+              </div>
             )
           })}
-        </ol>
+        </div>
       )
       currentNumberedList = []
     }
@@ -262,6 +266,40 @@ export default function CaseStudyDetail({ caseStudy, onBack }: CaseStudyDetailPr
             </ul>
           </div>
         </ScrollAnimation>
+
+        {/* Affected Endpoints */}
+        {caseStudy.affectedEndpoints && caseStudy.affectedEndpoints.length > 0 && (
+          <ScrollAnimation delay={550}>
+            <div className="terminal-window rounded-lg p-6 sm:p-8 mb-8">
+              <h2 className="text-2xl font-bold text-white font-mono mb-4">Affected Endpoints</h2>
+              <ul className="space-y-2">
+                {caseStudy.affectedEndpoints.map((endpoint, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <span className="text-hacker-green font-mono mt-1 flex-shrink-0">•</span>
+                    <code className="text-gray-200 flex-1 font-mono text-sm break-all bg-terminal-bg/50 px-2 py-1 rounded">
+                      {endpoint}
+                    </code>
+                  </li>
+                ))}
+              </ul>
+              {caseStudy.exploitedParameters && caseStudy.exploitedParameters.length > 0 && (
+                <div className="mt-6 pt-6 border-t border-hacker-green/30">
+                  <h3 className="text-lg font-bold text-white font-mono mb-3">Exploited Parameters</h3>
+                  <ul className="space-y-2">
+                    {caseStudy.exploitedParameters.map((param, idx) => (
+                      <li key={idx} className="flex items-start gap-3">
+                        <span className="text-hacker-cyan font-mono mt-1 flex-shrink-0">•</span>
+                        <code className="text-gray-200 flex-1 font-mono text-sm">
+                          {param}
+                        </code>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </ScrollAnimation>
+        )}
 
         {/* Threat Intelligence */}
         <ScrollAnimation delay={600}>

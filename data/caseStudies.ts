@@ -41,6 +41,8 @@ export interface CaseStudy {
   professionalContribution: string;
   conclusion: string;
   appendices?: string[];
+  affectedEndpoints?: string[];
+  exploitedParameters?: string[];
 }
 
 export const caseStudies: CaseStudy[] = [
@@ -217,16 +219,21 @@ The testing was conducted entirely within authenticated sessions and involved no
       'Passive Security Testing: Analyzed API endpoints without intrusive techniques',
       'Parameter Manipulation: Modified aadhar and applicantId parameters to test access controls',
       'Data Enumeration: Identified sequential patterns in applicant IDs enabling bulk data access',
-      'Impact Assessment: Documented all exposed sensitive data types and affected user count',
-      'Affected Endpoints: https://jnboverseas.apcfss.in/jnboverseas/registrationformdata/?aadhar=<aadhar_number>',
-      'Affected Endpoints: https://jnboverseas.apcfss.in/jnboverseas/getStudentDashBoardData/?aadhar=<aadhar_number>',
-      'Affected Endpoints: https://jnboverseas.apcfss.in/jnboverseas/getApplicantDetails?applicantId=<applicant_id>',
-      'Affected Endpoints: https://jnboverseas.apcfss.in/jnboverseas/registrationform/getPreviewPersonal?applicantId=<applicant_id>',
-      'Affected Endpoints: https://jnboverseas.apcfss.in/jnboverseas/registrationform/getPreviewFamily?applicantId=<applicant_id>',
-      'Affected Endpoints: https://jnboverseas.apcfss.in/jnboverseas/registrationform/getPreviewEducation?applicantId=<applicant_id>',
-      'Affected Endpoints: https://jnboverseas.apcfss.in/jnboverseas/registrationform/getPreviewForeign?applicantId=<applicant_id>',
-      'Affected Endpoints: https://jnboverseas.apcfss.in/jnboverseas/registrationform/getUploadDocuments?applicantId=<applicant_id>',
-      'Exploited Parameters: aadhar (12-digit unique identifier), applicantId (numeric)'
+      'Impact Assessment: Documented all exposed sensitive data types and affected user count'
+    ],
+    affectedEndpoints: [
+      'https://jnboverseas.apcfss.in/jnboverseas/registrationformdata/?aadhar=<aadhar_number>',
+      'https://jnboverseas.apcfss.in/jnboverseas/getStudentDashBoardData/?aadhar=<aadhar_number>',
+      'https://jnboverseas.apcfss.in/jnboverseas/getApplicantDetails?applicantId=<applicant_id>',
+      'https://jnboverseas.apcfss.in/jnboverseas/registrationform/getPreviewPersonal?applicantId=<applicant_id>',
+      'https://jnboverseas.apcfss.in/jnboverseas/registrationform/getPreviewFamily?applicantId=<applicant_id>',
+      'https://jnboverseas.apcfss.in/jnboverseas/registrationform/getPreviewEducation?applicantId=<applicant_id>',
+      'https://jnboverseas.apcfss.in/jnboverseas/registrationform/getPreviewForeign?applicantId=<applicant_id>',
+      'https://jnboverseas.apcfss.in/jnboverseas/registrationform/getUploadDocuments?applicantId=<applicant_id>'
+    ],
+    exploitedParameters: [
+      'aadhar (12-digit unique identifier)',
+      'applicantId (numeric)'
     ],
     threatIntelligence: {
       claimedAddress: 'Andhra Pradesh, India',
