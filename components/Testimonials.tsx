@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 import { Quote, Linkedin, ChevronLeft, ChevronRight } from 'lucide-react'
 import { resumeData } from '@/data/resume'
 import ScrollAnimation from './ScrollAnimation'
@@ -51,17 +52,19 @@ export default function Testimonials() {
             {/* Testimonial Content */}
             <div className="relative z-10">
               <blockquote className="text-xl md:text-2xl text-gray-200 leading-relaxed mb-8 font-mono italic">
-                "{currentTestimonial.text}"
+                &ldquo;{currentTestimonial.text}&rdquo;
               </blockquote>
 
               {/* Author Info */}
               <div className="flex items-center justify-between flex-wrap gap-4">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-hacker-green/20 to-hacker-cyan/20 flex items-center justify-center border-2 border-hacker-green/30">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-hacker-green/20 to-hacker-cyan/20 flex items-center justify-center border-2 border-hacker-green/30 overflow-hidden">
                     {currentTestimonial.avatar ? (
-                      <img
+                      <Image
                         src={currentTestimonial.avatar}
                         alt={currentTestimonial.name}
+                        width={64}
+                        height={64}
                         className="w-full h-full rounded-full object-cover"
                       />
                     ) : (
