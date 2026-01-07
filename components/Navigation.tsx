@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
 import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
 import { resumeData } from '@/data/resume'
@@ -27,6 +28,8 @@ const navItems = [
 ]
 
 export default function Navigation() {
+  const pathname = usePathname()
+  const router = useRouter()
   const [isScrolled, setIsScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -163,17 +166,46 @@ export default function Navigation() {
   }, [calculateVisibleItems])
 
   const scrollToSection = (id: string) => {
-    // Handle blog route separately
+    setIsMobileMenuOpen(false)
+    
+    // Handle blog - scroll to blog-preview section on home page
     if (id === 'blog') {
-      window.location.href = '/blog'
-      setIsMobileMenuOpen(false)
+      // If we're not on the home page, navigate there first
+      if (pathname !== '/') {
+        router.push('/')
+        // Wait for navigation, then scroll
+        setTimeout(() => {
+          const element = document.getElementById('blog-preview')
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
+        }, 300)
+      } else {
+        // We're on home page, just scroll
+        const element = document.getElementById('blog-preview')
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }
       return
     }
     
-    const element = document.getElementById(id)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      setIsMobileMenuOpen(false)
+    // For other sections, if we're not on home page, navigate first
+    if (pathname !== '/') {
+      router.push('/')
+      // Wait for navigation, then scroll
+      setTimeout(() => {
+        const element = document.getElementById(id)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 300)
+    } else {
+      // We're on home page, just scroll
+      const element = document.getElementById(id)
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
     }
   }
 
